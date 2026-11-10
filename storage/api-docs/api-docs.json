@@ -1,0 +1,930 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Pengabdian Dosen - Landing Page API",
+        "description": "API publik untuk mengambil data konten landing page Program Pengabdian Dosen. Semua endpoint bersifat read-only (GET) dan tidak memerlukan autentikasi.",
+        "contact": {
+            "name": "Admin",
+            "email": "admin@pengabdiandosen.id"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "/api/v1",
+            "description": "API v1 Server"
+        }
+    ],
+    "paths": {
+        "/about": {
+            "get": {
+                "tags": [
+                    "About Section"
+                ],
+                "summary": "Daftar About Section aktif",
+                "description": "Menampilkan semua about section yang berstatus aktif beserta cards dan points-nya. Digunakan untuk menampilkan konten \"Tentang Program\" di landing page.",
+                "operationId": "3a1d372655d014fe77533376ae310e86",
+                "responses": {
+                    "200": {
+                        "description": "Berhasil mengambil data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/AboutSection"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/about/{id}": {
+            "get": {
+                "tags": [
+                    "About Section"
+                ],
+                "summary": "Detail About Section",
+                "description": "Menampilkan detail satu about section berdasarkan ID, termasuk cards dan points-nya.",
+                "operationId": "0493a3a1ae0a8336d3ff60b06d4fd11d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID About Section",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Berhasil mengambil data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/AboutSection"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Data tidak ditemukan"
+                    }
+                }
+            }
+        },
+        "/contact": {
+            "get": {
+                "tags": [
+                    "Contact"
+                ],
+                "summary": "Data Kontak",
+                "description": "Menampilkan section kontak yang aktif beserta daftar item kontak (alamat, email, WhatsApp, dll). Hanya mengembalikan 1 section aktif.",
+                "operationId": "27825138666a8e10318d78cf196867d2",
+                "responses": {
+                    "200": {
+                        "description": "Berhasil mengambil data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/ContactSection"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/home": {
+            "get": {
+                "tags": [
+                    "Home Section"
+                ],
+                "summary": "Daftar Home Section aktif",
+                "description": "Menampilkan semua home section yang berstatus aktif. Digunakan untuk menampilkan konten hero/banner pada landing page.",
+                "operationId": "1bc2573b27ca212c9f41213ce279fa28",
+                "responses": {
+                    "200": {
+                        "description": "Berhasil mengambil data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/HomeSection"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/home/{id}": {
+            "get": {
+                "tags": [
+                    "Home Section"
+                ],
+                "summary": "Detail Home Section",
+                "description": "Menampilkan detail satu home section berdasarkan ID.",
+                "operationId": "8fb3efcdf3cec7c41b75b037872d5ef2",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID Home Section",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Berhasil mengambil data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/HomeSection"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Data tidak ditemukan"
+                    }
+                }
+            }
+        },
+        "/how-to-orders": {
+            "get": {
+                "tags": [
+                    "How To Order"
+                ],
+                "summary": "Data Cara Pemesanan",
+                "description": "Menampilkan section cara pemesanan (how to order) yang aktif beserta langkah-langkahnya. Hanya mengembalikan 1 section aktif.",
+                "operationId": "cc298726c23aacffe1e895869de66f6c",
+                "responses": {
+                    "200": {
+                        "description": "Berhasil mengambil data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/HowToOrderSection"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/products": {
+            "get": {
+                "tags": [
+                    "Product Section"
+                ],
+                "summary": "Daftar Product Section aktif",
+                "description": "Menampilkan semua product section yang berstatus aktif beserta daftar produknya. Digunakan untuk menampilkan katalog produk di landing page.",
+                "operationId": "b6cd28d879a52d15232a6da7a92c0d11",
+                "responses": {
+                    "200": {
+                        "description": "Berhasil mengambil data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/ProductSection"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/products/{id}": {
+            "get": {
+                "tags": [
+                    "Product Section"
+                ],
+                "summary": "Detail Product Section",
+                "description": "Menampilkan detail satu product section berdasarkan ID, termasuk daftar produk di dalamnya.",
+                "operationId": "c9a48d95776ade4e77e5596fed6ed797",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID Product Section",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Berhasil mengambil data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/ProductSection"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Data tidak ditemukan"
+                    }
+                }
+            }
+        },
+        "/testimonials": {
+            "get": {
+                "tags": [
+                    "Testimonial"
+                ],
+                "summary": "Data Testimoni",
+                "description": "Menampilkan section testimoni yang aktif beserta daftar statistik dan testimoni pelanggan. Hanya mengembalikan 1 section aktif.",
+                "operationId": "c1e780205e01566f0dc6bd13e2a2b934",
+                "responses": {
+                    "200": {
+                        "description": "Berhasil mengambil data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/TestimonialSection"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "HomeSection": {
+                "title": "Home Section",
+                "description": "Konten section hero / banner pada landing page",
+                "properties": {
+                    "id": {
+                        "description": "OpenAPI Schema definitions for all API resources.\nSchemas are defined here to keep controllers clean.",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "title": {
+                        "type": "string",
+                        "example": "Selamat Datang di Program Pengabdian Dosen"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "<p>Deskripsi program pengabdian...</p>"
+                    },
+                    "image_url": {
+                        "type": "string",
+                        "format": "url",
+                        "example": "http://localhost:8000/storage/home-sections/hero.jpg",
+                        "nullable": true
+                    },
+                    "buttons": {
+                        "properties": {
+                            "button_one": {
+                                "properties": {
+                                    "text": {
+                                        "type": "string",
+                                        "example": "Lihat Produk",
+                                        "nullable": true
+                                    },
+                                    "link": {
+                                        "type": "string",
+                                        "example": "#products",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            },
+                            "button_two": {
+                                "properties": {
+                                    "text": {
+                                        "type": "string",
+                                        "example": "Hubungi Kami",
+                                        "nullable": true
+                                    },
+                                    "link": {
+                                        "type": "string",
+                                        "example": "#contact",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "is_active": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2026-01-15T08:30:00+07:00"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2026-01-15T08:30:00+07:00"
+                    }
+                },
+                "type": "object"
+            },
+            "AboutSection": {
+                "title": "About Section",
+                "description": "Konten section tentang program pada landing page",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "title": {
+                        "type": "string",
+                        "example": "Tentang Program Pengabdian"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "<p>Deskripsi tentang program...</p>"
+                    },
+                    "image_url": {
+                        "type": "string",
+                        "format": "url",
+                        "example": "http://localhost:8000/storage/about-sections/about.jpg",
+                        "nullable": true
+                    },
+                    "cards": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/AboutCard"
+                        }
+                    },
+                    "points": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/AboutPoint"
+                        }
+                    },
+                    "is_active": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "AboutCard": {
+                "title": "About Card",
+                "description": "Kartu fitur/keunggulan pada about section",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "title": {
+                        "type": "string",
+                        "example": "Pemberdayaan Masyarakat"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Membantu masyarakat mengembangkan potensi..."
+                    },
+                    "icon_name": {
+                        "type": "string",
+                        "example": "users",
+                        "nullable": true
+                    },
+                    "icon_image": {
+                        "type": "string",
+                        "example": "about-cards/icon.png",
+                        "nullable": true
+                    },
+                    "icon_image_url": {
+                        "type": "string",
+                        "format": "url",
+                        "nullable": true
+                    },
+                    "steps": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "AboutPoint": {
+                "title": "About Point",
+                "description": "Poin statistik / pencapaian pada about section",
+                "properties": {
+                    "number": {
+                        "type": "string",
+                        "example": "500+",
+                        "nullable": true
+                    },
+                    "title": {
+                        "type": "string",
+                        "example": "Masyarakat Terbantu",
+                        "nullable": true
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Telah membantu lebih dari 500 masyarakat",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "ProductSection": {
+                "title": "Product Section",
+                "description": "Konten section produk / katalog pada landing page",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "title": {
+                        "type": "string",
+                        "example": "Produk Unggulan Kami"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "<p>Berikut produk-produk hasil program...</p>"
+                    },
+                    "whatsapp_number": {
+                        "type": "string",
+                        "example": "6281234567890",
+                        "nullable": true
+                    },
+                    "is_active": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "products": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Product"
+                        }
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "Product": {
+                "title": "Product",
+                "description": "Detail produk dalam katalog",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "product_section_id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Sabun Batang Eco-Enzyme"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Sabun alami berbahan eco-enzyme yang ramah lingkungan"
+                    },
+                    "benefit": {
+                        "type": "string",
+                        "example": "Aman untuk kulit sensitif anak-anak & 100% alami",
+                        "nullable": true
+                    },
+                    "detail": {
+                        "type": "string",
+                        "example": "Komposisi: Eco-enzyme, VCO, NaOH. Netto: 80gr",
+                        "nullable": true
+                    },
+                    "price": {
+                        "type": "string",
+                        "example": "Rp 15.000 / batang"
+                    },
+                    "image_url": {
+                        "type": "string",
+                        "format": "url",
+                        "example": "http://localhost:8000/storage/products/sabun.jpg",
+                        "nullable": true
+                    },
+                    "detail_images": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ProductDetailImage"
+                        }
+                    },
+                    "order": {
+                        "type": "integer",
+                        "example": 0
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "ProductDetailImage": {
+                "title": "Product Detail Image",
+                "description": "Detail gambar / galeri foto produk (maksimal 5 foto per produk)",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "product_id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "image_url": {
+                        "type": "string",
+                        "format": "url",
+                        "example": "http://localhost:8000/storage/product-detail-images/sabun-detail-1.jpg"
+                    },
+                    "order": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "HowToOrderSection": {
+                "title": "How To Order Section",
+                "description": "Konten section cara pemesanan pada landing page",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "title": {
+                        "type": "string",
+                        "example": "Cara Memesan"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Ikuti langkah berikut untuk memesan produk",
+                        "nullable": true
+                    },
+                    "button_text": {
+                        "type": "string",
+                        "example": "Pesan Sekarang",
+                        "nullable": true
+                    },
+                    "button_link": {
+                        "type": "string",
+                        "example": "https://wa.me/6281234567890",
+                        "nullable": true
+                    },
+                    "is_active": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "steps": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/HowToOrderStep"
+                        }
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "HowToOrderStep": {
+                "title": "How To Order Step",
+                "description": "Langkah-langkah dalam cara pemesanan",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "how_to_order_section_id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "title": {
+                        "type": "string",
+                        "example": "Pilih Produk"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Pilih produk yang ingin Anda pesan dari katalog",
+                        "nullable": true
+                    },
+                    "icon_name": {
+                        "type": "string",
+                        "example": "shopping-cart",
+                        "nullable": true
+                    },
+                    "icon_image": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "icon_image_url": {
+                        "type": "string",
+                        "format": "url",
+                        "nullable": true
+                    },
+                    "step_order": {
+                        "type": "integer",
+                        "example": 1
+                    }
+                },
+                "type": "object"
+            },
+            "TestimonialSection": {
+                "title": "Testimonial Section",
+                "description": "Konten section testimoni pada landing page",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "title": {
+                        "type": "string",
+                        "example": "Apa Kata Mereka?"
+                    },
+                    "statistics": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Statistic"
+                        }
+                    },
+                    "testimonials": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Testimonial"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "Statistic": {
+                "title": "Statistic",
+                "description": "Data statistik pada section testimoni",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "value": {
+                        "type": "string",
+                        "example": "500+"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Pelanggan Puas"
+                    }
+                },
+                "type": "object"
+            },
+            "Testimonial": {
+                "title": "Testimonial",
+                "description": "Data testimoni pelanggan",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "quote": {
+                        "type": "string",
+                        "example": "Produknya sangat berkualitas dan ramah lingkungan!"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Budi Santoso"
+                    },
+                    "location": {
+                        "type": "string",
+                        "example": "Surabaya, Jawa Timur",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "ContactSection": {
+                "title": "Contact Section",
+                "description": "Konten section kontak pada landing page",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "title": {
+                        "type": "string",
+                        "example": "Hubungi Kami"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Jangan ragu untuk menghubungi kami",
+                        "nullable": true
+                    },
+                    "is_active": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "location": {
+                        "type": "string",
+                        "example": "Jl. Contoh No. 123, Surabaya",
+                        "nullable": true
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "info@pengabdiandosen.id",
+                        "nullable": true
+                    },
+                    "whatsapp": {
+                        "type": "string",
+                        "example": "6281234567890",
+                        "nullable": true
+                    },
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ContactItem"
+                        }
+                    },
+                    "contacts": {
+                        "description": "Alias dari items (data yang sama)",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ContactItem"
+                        }
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "ContactItem": {
+                "title": "Contact Item",
+                "description": "Item kontak individu (alamat, email, telepon, dll)",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "type": {
+                        "type": "string",
+                        "example": "whatsapp"
+                    },
+                    "label": {
+                        "type": "string",
+                        "example": "WhatsApp Kami"
+                    },
+                    "value": {
+                        "type": "string",
+                        "example": "6281234567890"
+                    },
+                    "icon_name": {
+                        "type": "string",
+                        "example": "phone",
+                        "nullable": true
+                    },
+                    "icon_image": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "icon_image_url": {
+                        "type": "string",
+                        "format": "url",
+                        "nullable": true
+                    },
+                    "order": {
+                        "type": "integer",
+                        "example": 1
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Home Section",
+            "description": "Endpoint untuk konten section home / hero landing page"
+        },
+        {
+            "name": "About Section",
+            "description": "Endpoint untuk konten section tentang program"
+        },
+        {
+            "name": "Product Section",
+            "description": "Endpoint untuk konten section produk / katalog"
+        },
+        {
+            "name": "How To Order",
+            "description": "Endpoint untuk konten section cara pemesanan"
+        },
+        {
+            "name": "Testimonial",
+            "description": "Endpoint untuk konten section testimoni"
+        },
+        {
+            "name": "Contact",
+            "description": "Endpoint untuk konten section kontak"
+        }
+    ]
+}
