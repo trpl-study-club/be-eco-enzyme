@@ -72,11 +72,13 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     });
     */
 
-    // Product Section Management
+    // Product Management (Individual Products)
     Route::middleware('permission:manage_product_sections')->group(function () {
-        Route::patch('/product-sections/{productSection}/toggle-status', [ProductSectionController::class, 'toggleStatus'])
+        Route::patch('/product-sections/{product}/toggle-status', [ProductSectionController::class, 'toggleStatus'])
             ->name('product-sections.toggle-status');
-        Route::resource('product-sections', ProductSectionController::class)->except(['show']);
+        Route::resource('product-sections', ProductSectionController::class)
+            ->parameters(['product-sections' => 'product'])
+            ->except(['show']);
     });
 
     // How To Order Management

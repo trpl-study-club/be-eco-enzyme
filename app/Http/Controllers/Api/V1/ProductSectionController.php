@@ -16,7 +16,7 @@ class ProductSectionController extends Controller
     #[OA\Get(
         path: '/products',
         summary: 'Daftar Produk aktif',
-        description: 'Menampilkan semua produk dari product section yang berstatus aktif beserta gambar dan spesifikasinya, diurutkan berdasarkan order secara ascending.',
+        description: 'Menampilkan semua produk yang berstatus aktif beserta gambarnya, diurutkan berdasarkan order secara ascending.',
         tags: ['Product Section'],
         responses: [
             new OA\Response(
@@ -37,8 +37,9 @@ class ProductSectionController extends Controller
     public function index(): AnonymousResourceCollection
     {
         $products = Product::with('detailImages')
-            ->whereHas('productSection', fn ($query) => $query->where('is_active', true))
+            ->where('is_active', true)
             ->orderBy('order')
+            ->orderBy('id')
             ->get();
 
         return ProductResource::collection($products);

@@ -49,7 +49,7 @@
                     "Product Section"
                 ],
                 "summary": "Daftar Produk aktif",
-                "description": "Menampilkan semua produk dari product section yang berstatus aktif beserta gambar dan spesifikasinya, diurutkan berdasarkan order secara ascending.",
+                "description": "Menampilkan semua produk yang berstatus aktif beserta gambarnya, diurutkan berdasarkan order secara ascending.",
                 "operationId": "b6cd28d879a52d15232a6da7a92c0d11",
                 "responses": {
                     "200": {
@@ -148,7 +148,7 @@
             },
             "Product": {
                 "title": "Product",
-                "description": "Detail produk dalam katalog",
+                "description": "Detail produk individual",
                 "properties": {
                     "id": {
                         "type": "integer",
@@ -158,23 +158,15 @@
                         "type": "string",
                         "example": "Sabun Batang"
                     },
-                    "description": {
-                        "type": "string",
-                        "example": "Lembut di kulit, wangi alami dari enzim buah."
-                    },
-                    "benefit": {
-                        "type": "string",
-                        "example": "Aman untuk kulit sensitif anak-anak.",
-                        "nullable": true
-                    },
                     "detail": {
                         "type": "string",
-                        "example": "Sabun batang alami berbahan dasar eco-enzyme fermentasi buah.",
+                        "example": "Lembut di kulit, wangi alami dari enzim buah.",
                         "nullable": true
                     },
                     "price": {
                         "type": "string",
-                        "example": "Rp 15.000"
+                        "example": "Rp 15.000",
+                        "nullable": true
                     },
                     "order": {
                         "type": "integer",
@@ -187,54 +179,13 @@
                             "format": "url"
                         },
                         "example": [
-                            "https://sanitasihijau.com/storage/products/sabun-batang-1.webp",
+                            "https://sanitasihijau.com/storage/product-images/sabun-batang-1.webp",
                             "https://sanitasihijau.com/storage/product-detail-images/sabun-batang-2.webp"
                         ]
                     },
-                    "specs": {
-                        "properties": {
-                            "netto": {
-                                "type": "string",
-                                "example": "100 gr",
-                                "nullable": true
-                            },
-                            "packaging": {
-                                "type": "string",
-                                "example": "Kertas Kraft Daur Ulang",
-                                "nullable": true
-                            },
-                            "shape": {
-                                "type": "string",
-                                "example": "Batang Padat (Bunga, Hexagonal)",
-                                "nullable": true
-                            },
-                            "suitability": {
-                                "type": "string",
-                                "example": "Semua Jenis Kulit & Balita",
-                                "nullable": true
-                            },
-                            "stock": {
-                                "type": "string",
-                                "example": "Tersedia (Ready Stock)",
-                                "nullable": true
-                            },
-                            "certification": {
-                                "type": "string",
-                                "example": "100% Organik & Biodegradable",
-                                "nullable": true
-                            },
-                            "ingredients": {
-                                "type": "string",
-                                "example": "Minyak kelapa murni dan fermentasi eco-enzyme buah.",
-                                "nullable": true
-                            },
-                            "usage": {
-                                "type": "string",
-                                "example": "Busakan dengan air, usapkan lembut ke seluruh tubuh, lalu bilas hingga bersih.",
-                                "nullable": true
-                            }
-                        },
-                        "type": "object"
+                    "is_active": {
+                        "type": "boolean",
+                        "example": true
                     }
                 },
                 "type": "object"

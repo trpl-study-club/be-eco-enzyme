@@ -290,8 +290,8 @@
                                 </div>
                             </div>
                             <span
-                                class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-emerald-50 border border-emerald-200 text-emerald-700 shrink-0">
-                                Siap Dipesan
+                                class="px-2.5 py-1 rounded-full text-[11px] font-semibold shrink-0 {{ $prod->is_active ? 'bg-emerald-50 border border-emerald-200 text-emerald-700' : 'bg-slate-100 border border-slate-200 text-slate-600' }}">
+                                {{ $prod->is_active ? 'Aktif' : 'Nonaktif' }}
                             </span>
                         </div>
                     @empty

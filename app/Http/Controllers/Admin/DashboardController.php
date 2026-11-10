@@ -11,7 +11,7 @@ use App\Models\ContactSection;
 // use App\Models\HowToOrderSection;
 // use App\Models\HowToOrderStep;
 use App\Models\Product;
-use App\Models\ProductSection;
+// use App\Models\ProductSection;
 use App\Models\TestimonialItem;
 use App\Models\TestimonialSection;
 use App\Models\User;
@@ -47,7 +47,7 @@ class DashboardController extends Controller
         */
 
         // Produk (Products)
-        $activeProductSection = ProductSection::where('is_active', true)->first();
+        $activeProductsCount = Product::where('is_active', true)->count();
         $totalProducts = Product::count();
         $recentProducts = Product::latest('updated_at')->take(4)->get();
 
@@ -92,8 +92,8 @@ class DashboardController extends Controller
             'product' => [
                 'name' => 'Produk',
                 'description' => 'Katalog produk & rincian harga',
-                'is_ready' => $activeProductSection !== null && $totalProducts > 0,
-                'count_label' => $totalProducts > 0 ? $totalProducts.' Produk Terdaftar' : 'Belum Ada Produk',
+                'is_ready' => $activeProductsCount > 0,
+                'count_label' => $totalProducts > 0 ? $activeProductsCount.' dari '.$totalProducts.' Produk Aktif' : 'Belum Ada Produk',
                 'route' => 'admin.product-sections.index',
                 'permission' => 'manage_product_sections',
             ],
@@ -132,7 +132,6 @@ class DashboardController extends Controller
             // HomeSection::max('updated_at'),
             // AboutSection::max('updated_at'),
             // AboutSectionCard::max('updated_at'),
-            ProductSection::max('updated_at'),
             Product::max('updated_at'),
             // HowToOrderSection::max('updated_at'),
             TestimonialSection::max('updated_at'),
