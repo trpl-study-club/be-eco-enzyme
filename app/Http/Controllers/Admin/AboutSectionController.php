@@ -3,18 +3,17 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\AboutSection;
-use App\Models\AboutSectionCard;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\View\View;
+
+// use App\Models\AboutSection;
+// use App\Models\AboutSectionCard;
+// use Illuminate\Http\RedirectResponse;
+// use Illuminate\Http\Request;
+// use Illuminate\Support\Facades\Storage;
+// use Illuminate\View\View;
 
 class AboutSectionController extends Controller
 {
-    /**
-     * Display a listing of the about sections.
-     */
+    /*
     public function index(Request $request): View
     {
         $query = AboutSection::query()->with('cards')->latest();
@@ -40,17 +39,11 @@ class AboutSectionController extends Controller
         return view('admin.about-section.index', compact('aboutSections', 'activeCount'));
     }
 
-    /**
-     * Show the form for creating a new about section.
-     */
     public function create(): View
     {
         return view('admin.about-section.create');
     }
 
-    /**
-     * Store a newly created about section in storage.
-     */
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
@@ -83,7 +76,6 @@ class AboutSectionController extends Controller
             ]);
         }
 
-        /** @var AboutSection $aboutSection */
         $aboutSection = AboutSection::create([
             'title' => $validated['title'],
             'description' => $validated['description'],
@@ -125,9 +117,6 @@ class AboutSectionController extends Controller
             ->with('success', $message);
     }
 
-    /**
-     * Show the form for editing the specified about section.
-     */
     public function edit(AboutSection $aboutSection): View
     {
         $aboutSection->load('cards');
@@ -135,9 +124,6 @@ class AboutSectionController extends Controller
         return view('admin.about-section.edit', compact('aboutSection'));
     }
 
-    /**
-     * Update the specified about section in storage.
-     */
     public function update(Request $request, AboutSection $aboutSection): RedirectResponse
     {
         $validated = $request->validate([
@@ -196,7 +182,6 @@ class AboutSectionController extends Controller
                 $iconName = trim($cardData['icon_name'] ?? '');
 
                 if ($cardId && $existingCards->has($cardId)) {
-                    /** @var AboutSectionCard $card */
                     $card = $existingCards->get($cardId);
                     $iconImagePath = $card->icon_image;
 
@@ -265,9 +250,6 @@ class AboutSectionController extends Controller
             ->with('success', $message);
     }
 
-    /**
-     * Remove the specified about section from storage.
-     */
     public function destroy(AboutSection $aboutSection): RedirectResponse
     {
         // Hapus semua gambar card dan icon
@@ -288,9 +270,6 @@ class AboutSectionController extends Controller
             ->with('success', 'Konten Tentang Kami berhasil dihapus.');
     }
 
-    /**
-     * Toggle the active status of the specified about section.
-     */
     public function toggleStatus(AboutSection $aboutSection): RedirectResponse
     {
         $newStatus = ! $aboutSection->is_active;
@@ -316,4 +295,5 @@ class AboutSectionController extends Controller
 
         return back()->with('success', $message);
     }
+    */
 }

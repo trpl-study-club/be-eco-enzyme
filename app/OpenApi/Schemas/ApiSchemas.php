@@ -10,7 +10,7 @@ use OpenApi\Attributes as OA;
  */
 
 // ─── Home Section ────────────────────────────────────────────────────────────
-
+/*
 #[OA\Schema(
     schema: 'HomeSection',
     title: 'Home Section',
@@ -47,9 +47,10 @@ use OpenApi\Attributes as OA;
         new OA\Property(property: 'updated_at', type: 'string', format: 'date-time', example: '2026-01-15T08:30:00+07:00'),
     ]
 )]
+*/
 
 // ─── About Section ───────────────────────────────────────────────────────────
-
+/*
 #[OA\Schema(
     schema: 'AboutSection',
     title: 'About Section',
@@ -100,6 +101,7 @@ use OpenApi\Attributes as OA;
         new OA\Property(property: 'description', type: 'string', nullable: true, example: 'Telah membantu lebih dari 500 masyarakat'),
     ]
 )]
+*/
 
 // ─── Product Section ─────────────────────────────────────────────────────────
 
@@ -126,38 +128,23 @@ use OpenApi\Attributes as OA;
 #[OA\Schema(
     schema: 'Product',
     title: 'Product',
-    description: 'Detail produk dalam katalog',
+    description: 'Detail produk individual',
     properties: [
         new OA\Property(property: 'id', type: 'integer', example: 1),
         new OA\Property(property: 'name', type: 'string', example: 'Sabun Batang'),
-        new OA\Property(property: 'description', type: 'string', example: 'Lembut di kulit, wangi alami dari enzim buah.'),
-        new OA\Property(property: 'benefit', type: 'string', nullable: true, example: 'Aman untuk kulit sensitif anak-anak.'),
-        new OA\Property(property: 'detail', type: 'string', nullable: true, example: 'Sabun batang alami berbahan dasar eco-enzyme fermentasi buah.'),
-        new OA\Property(property: 'price', type: 'string', example: 'Rp 15.000'),
+        new OA\Property(property: 'detail', type: 'string', nullable: true, example: 'Lembut di kulit, wangi alami dari enzim buah.'),
+        new OA\Property(property: 'price', type: 'string', nullable: true, example: 'Rp 15.000'),
         new OA\Property(property: 'order', type: 'integer', example: 1),
         new OA\Property(
             property: 'images',
             type: 'array',
             items: new OA\Items(type: 'string', format: 'url'),
             example: [
-                'https://sanitasihijau.com/storage/products/sabun-batang-1.webp',
+                'https://sanitasihijau.com/storage/product-images/sabun-batang-1.webp',
                 'https://sanitasihijau.com/storage/product-detail-images/sabun-batang-2.webp',
             ]
         ),
-        new OA\Property(
-            property: 'specs',
-            type: 'object',
-            properties: [
-                new OA\Property(property: 'netto', type: 'string', nullable: true, example: '100 gr'),
-                new OA\Property(property: 'packaging', type: 'string', nullable: true, example: 'Kertas Kraft Daur Ulang'),
-                new OA\Property(property: 'shape', type: 'string', nullable: true, example: 'Batang Padat (Bunga, Hexagonal)'),
-                new OA\Property(property: 'suitability', type: 'string', nullable: true, example: 'Semua Jenis Kulit & Balita'),
-                new OA\Property(property: 'stock', type: 'string', nullable: true, example: 'Tersedia (Ready Stock)'),
-                new OA\Property(property: 'certification', type: 'string', nullable: true, example: '100% Organik & Biodegradable'),
-                new OA\Property(property: 'ingredients', type: 'string', nullable: true, example: 'Minyak kelapa murni dan fermentasi eco-enzyme buah.'),
-                new OA\Property(property: 'usage', type: 'string', nullable: true, example: 'Busakan dengan air, usapkan lembut ke seluruh tubuh, lalu bilas hingga bersih.'),
-            ]
-        ),
+        new OA\Property(property: 'is_active', type: 'boolean', example: true),
     ]
 )]
 
@@ -176,7 +163,7 @@ use OpenApi\Attributes as OA;
 )]
 
 // ─── How To Order Section ────────────────────────────────────────────────────
-
+/*
 #[OA\Schema(
     schema: 'HowToOrderSection',
     title: 'How To Order Section',
@@ -213,6 +200,7 @@ use OpenApi\Attributes as OA;
         new OA\Property(property: 'step_order', type: 'integer', example: 1),
     ]
 )]
+*/
 
 // ─── Testimonial Section ─────────────────────────────────────────────────────
 

@@ -3,17 +3,16 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\HomeSection;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\View\View;
+
+// use App\Models\HomeSection;
+// use Illuminate\Http\RedirectResponse;
+// use Illuminate\Http\Request;
+// use Illuminate\Support\Facades\Storage;
+// use Illuminate\View\View;
 
 class HomeSectionController extends Controller
 {
-    /**
-     * Display a listing of the home sections.
-     */
+    /*
     public function index(Request $request): View
     {
         $query = HomeSection::query()->latest();
@@ -39,17 +38,11 @@ class HomeSectionController extends Controller
         return view('admin.home-section.index', compact('homeSections', 'activeCount'));
     }
 
-    /**
-     * Show the form for creating a new home section.
-     */
     public function create(): View
     {
         return view('admin.home-section.create');
     }
 
-    /**
-     * Store a newly created home section in storage.
-     */
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
@@ -96,17 +89,11 @@ class HomeSectionController extends Controller
             ->with('success', $message);
     }
 
-    /**
-     * Show the form for editing the specified home section.
-     */
     public function edit(HomeSection $homeSection): View
     {
         return view('admin.home-section.edit', compact('homeSection'));
     }
 
-    /**
-     * Update the specified home section in storage.
-     */
     public function update(Request $request, HomeSection $homeSection): RedirectResponse
     {
         $validated = $request->validate([
@@ -168,9 +155,6 @@ class HomeSectionController extends Controller
             ->with('success', $message);
     }
 
-    /**
-     * Remove the specified home section from storage.
-     */
     public function destroy(HomeSection $homeSection): RedirectResponse
     {
         if ($homeSection->image && Storage::disk('public')->exists($homeSection->image)) {
@@ -183,9 +167,6 @@ class HomeSectionController extends Controller
             ->with('success', 'Banner berhasil dihapus.');
     }
 
-    /**
-     * Toggle the active status of the specified home section.
-     */
     public function toggleStatus(HomeSection $homeSection): RedirectResponse
     {
         $newStatus = ! $homeSection->is_active;
@@ -211,4 +192,5 @@ class HomeSectionController extends Controller
 
         return back()->with('success', $message);
     }
+    */
 }

@@ -1,11 +1,11 @@
 <?php
 
-use App\Http\Controllers\Admin\AboutSectionController;
+// use App\Http\Controllers\Admin\AboutSectionController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\ContactSectionController;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\HomeSectionController;
-use App\Http\Controllers\Admin\HowToOrderSectionController;
+// use App\Http\Controllers\Admin\HomeSectionController;
+// use App\Http\Controllers\Admin\HowToOrderSectionController;
 use App\Http\Controllers\Admin\ProductSectionController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\TestimonialSectionController;
@@ -55,32 +55,40 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     });
 
     // Home Section Management
+    /*
     Route::middleware('permission:manage_home_sections')->group(function () {
         Route::patch('/home-sections/{homeSection}/toggle-status', [HomeSectionController::class, 'toggleStatus'])
             ->name('home-sections.toggle-status');
         Route::resource('home-sections', HomeSectionController::class)->except(['show']);
     });
+    */
 
     // About Section Management
+    /*
     Route::middleware('permission:manage_about_sections')->group(function () {
         Route::patch('/about-sections/{aboutSection}/toggle-status', [AboutSectionController::class, 'toggleStatus'])
             ->name('about-sections.toggle-status');
         Route::resource('about-sections', AboutSectionController::class)->except(['show']);
     });
+    */
 
-    // Product Section Management
+    // Product Management (Individual Products)
     Route::middleware('permission:manage_product_sections')->group(function () {
-        Route::patch('/product-sections/{productSection}/toggle-status', [ProductSectionController::class, 'toggleStatus'])
+        Route::patch('/product-sections/{product}/toggle-status', [ProductSectionController::class, 'toggleStatus'])
             ->name('product-sections.toggle-status');
-        Route::resource('product-sections', ProductSectionController::class)->except(['show']);
+        Route::resource('product-sections', ProductSectionController::class)
+            ->parameters(['product-sections' => 'product'])
+            ->except(['show']);
     });
 
     // How To Order Management
+    /*
     Route::middleware('permission:manage_how_to_order')->group(function () {
         Route::patch('/how-to-orders/{howToOrder}/toggle-status', [HowToOrderSectionController::class, 'toggleStatus'])
             ->name('how-to-orders.toggle-status');
         Route::resource('how-to-orders', HowToOrderSectionController::class)->except(['show']);
     });
+    */
 
     // Testimonial Hub Management
     Route::middleware('permission:manage_testimonials')->group(function () {

@@ -33,8 +33,8 @@ class DatabaseSeeder extends Seeder
 
         // Seed landing page content
         $this->call([
-            HomeSectionSeeder::class,
-            AboutSectionSeeder::class,
+            // HomeSectionSeeder::class,
+            // AboutSectionSeeder::class,
             ContactSectionSeeder::class,
         ]);
     }

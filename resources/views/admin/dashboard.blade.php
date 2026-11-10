@@ -20,7 +20,7 @@
             <span>Lihat Website Publik</span>
         </a>
 
-        @if (auth()->user()?->hasRole('super_admin') || auth()->user()?->hasPermissionTo('manage_home_sections'))
+        {{-- @if (auth()->user()?->hasRole('super_admin') || auth()->user()?->hasPermissionTo('manage_home_sections'))
             <a href="{{ route('admin.home-sections.create') }}"
                 class="inline-flex items-center gap-1.5 px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl shadow-sm shadow-emerald-500/20 transition-all duration-150">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -28,7 +28,7 @@
                 </svg>
                 <span>Tambah Banner Beranda Baru</span>
             </a>
-        @endif
+        @endif --}}
     </div>
 @endsection
 
@@ -59,7 +59,7 @@
                         </h2>
                         <p class="text-xs sm:text-sm text-slate-600 mt-1 leading-relaxed">
                             Kelola seluruh informasi dan isi website desa secara terpusat. Saat ini <strong
-                                class="text-emerald-700 font-bold">{{ $liveModulesCount }} dari 6 bagian informasi</strong> utama
+                                class="text-emerald-700 font-bold">{{ $liveModulesCount }} dari 3 bagian informasi</strong> utama
                             telah aktif dan siap dilihat oleh warga di website publik.
                         </p>
                     </div>
@@ -101,7 +101,7 @@
                 </div>
                 <div class="mt-2">
                     <h3 class="text-2xl font-extrabold text-slate-900 tracking-tight">{{ $liveModulesCount }} <span
-                            class="text-sm font-semibold text-slate-400">/ 6 Bagian</span></h3>
+                            class="text-sm font-semibold text-slate-400">/ 3 Bagian</span></h3>
                     <p class="text-xs text-emerald-600 font-semibold mt-1 flex items-center gap-1.5">
                         <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                         Tampil di Website Publik
@@ -169,7 +169,7 @@
             </div>
         </div>
 
-        <!-- Status Kesiapan 6 Bagian Informasi Landing Page (Health Check) -->
+        <!-- Status Kesiapan 3 Bagian Informasi Landing Page (Health Check) -->
         <div class="bg-white rounded-3xl border border-gray-200/80 shadow-xs p-6 sm:p-7">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-5 border-b border-gray-100 gap-3">
                 <div>
@@ -181,12 +181,12 @@
                         </svg>
                         <span>Status Kesiapan Konten Website Warga</span>
                     </h3>
-                    <p class="text-xs text-slate-600 mt-0.5">Periksa kesiapan dan kelengkapan 6 bagian informasi utama sebelum ditampilkan kepada warga dan pengunjung website.</p>
+                    <p class="text-xs text-slate-600 mt-0.5">Periksa kesiapan dan kelengkapan 3 bagian informasi utama sebelum ditampilkan kepada warga dan pengunjung website.</p>
                 </div>
                 <div class="flex items-center gap-2">
                     <span
-                        class="px-3 py-1 rounded-full text-xs font-semibold {{ $liveModulesCount === 6 ? 'bg-emerald-50 text-emerald-700 border border-emerald-200/60' : 'bg-amber-50 text-amber-700 border border-amber-200/60' }}">
-                        {{ $liveModulesCount }} / 6 Bagian Siap Tampil
+                        class="px-3 py-1 rounded-full text-xs font-semibold {{ $liveModulesCount === 3 ? 'bg-emerald-50 text-emerald-700 border border-emerald-200/60' : 'bg-amber-50 text-amber-700 border border-amber-200/60' }}">
+                        {{ $liveModulesCount }} / 3 Bagian Siap Tampil
                     </span>
                 </div>
             </div>
@@ -270,16 +270,23 @@
 
                 <div class="mt-4 space-y-3">
                     @forelse($recentProducts as $prod)
+                        @php
+                            $prodImage = $prod->image ?: $prod->detailImages->first()?->image;
+                        @endphp
                         <div
                             class="p-3 rounded-2xl bg-gray-50/70 border border-gray-100 flex items-center justify-between gap-3 hover:bg-gray-50 transition-colors">
                             <div class="flex items-center gap-3 min-w-0">
-                                @if ($prod->image)
-                                    <img src="{{ asset('storage/' . $prod->image) }}"
-                                        class="w-12 h-12 rounded-xl object-cover border border-gray-200 shrink-0"
-                                        alt="{{ $prod->name }}">
+                                @if ($prodImage)
+                                    <div class="w-14 h-14 aspect-square rounded-xl overflow-hidden border border-gray-200 bg-white shrink-0"
+                                        style="aspect-ratio: 1 / 1;">
+                                        <img src="{{ asset('storage/' . $prodImage) }}"
+                                            class="w-full h-full object-cover object-center"
+                                            alt="{{ $prod->name }}">
+                                    </div>
                                 @else
                                     <div
-                                        class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-sm shrink-0 border border-emerald-100">
+                                        class="w-14 h-14 aspect-square rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-sm shrink-0 border border-emerald-100"
+                                        style="aspect-ratio: 1 / 1;">
                                         {{ strtoupper(substr($prod->name, 0, 2)) }}
                                     </div>
                                 @endif
@@ -290,8 +297,8 @@
                                 </div>
                             </div>
                             <span
-                                class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-emerald-50 border border-emerald-200 text-emerald-700 shrink-0">
-                                Siap Dipesan
+                                class="px-2.5 py-1 rounded-full text-[11px] font-semibold shrink-0 {{ $prod->is_active ? 'bg-emerald-50 border border-emerald-200 text-emerald-700' : 'bg-slate-100 border border-slate-200 text-slate-600' }}">
+                                {{ $prod->is_active ? 'Aktif' : 'Nonaktif' }}
                             </span>
                         </div>
                     @empty
@@ -396,8 +403,8 @@
                 <span>Pintasan Menu Operasional Cepat</span>
             </h3>
 
-            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5">
-                @if (auth()->user()?->hasRole('super_admin') || auth()->user()?->hasPermissionTo('manage_home_sections'))
+            <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+                {{-- @if (auth()->user()?->hasRole('super_admin') || auth()->user()?->hasPermissionTo('manage_home_sections'))
                     <a href="{{ route('admin.home-sections.create') }}"
                         class="p-4 rounded-2xl bg-white border border-gray-200/80 shadow-2xs hover:border-emerald-500 hover:shadow-md transition-all duration-200 flex flex-col items-center text-center group">
                         <div
@@ -411,7 +418,7 @@
                         <span class="text-xs font-bold text-slate-800">Ubah Banner Beranda</span>
                         <span class="text-[11px] text-slate-500 mt-0.5">Foto & Banner Depan</span>
                     </a>
-                @endif
+                @endif --}}
 
                 @if (auth()->user()?->hasRole('super_admin') || auth()->user()?->hasPermissionTo('manage_product_sections'))
                     <a href="{{ route('admin.product-sections.index') }}"

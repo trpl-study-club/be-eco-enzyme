@@ -132,15 +132,16 @@
                                     <div class="flex flex-wrap gap-1 max-w-xs">
                                         @php
                                             $labelMap = [
-                                                'manage_home_sections' => 'Banner Beranda',
-                                                'manage_about_sections' => 'Tentang Kami',
+                                                // 'manage_home_sections' => 'Banner Beranda',
+                                                // 'manage_about_sections' => 'Tentang Kami',
                                                 'manage_product_sections' => 'Katalog Produk',
-                                                'manage_how_to_order' => 'Panduan Cara Pesan',
+                                                // 'manage_how_to_order' => 'Panduan Cara Pesan',
                                                 'manage_testimonials' => 'Ulasan & Testimoni',
                                                 'manage_contact_sections' => 'Informasi Kontak',
                                             ];
+                                            $activePermissions = $user->getDirectPermissions()->filter(fn ($perm) => isset($labelMap[$perm->name]));
                                         @endphp
-                                        @forelse($user->getDirectPermissions() as $perm)
+                                        @forelse($activePermissions as $perm)
                                             <span class="inline-flex items-center px-2 py-0.5 rounded-md bg-slate-100 text-slate-700 font-medium text-[11px] border border-slate-200/80">
                                                 {{ $labelMap[$perm->name] ?? $perm->name }}
                                             </span>

@@ -17,10 +17,10 @@ use OpenApi\Attributes as OA;
     url: '/api/v1',
     description: 'API v1 Server'
 )]
-#[OA\Tag(name: 'Home Section', description: 'Endpoint untuk konten section home / hero landing page')]
-#[OA\Tag(name: 'About Section', description: 'Endpoint untuk konten section tentang program')]
+// #[OA\Tag(name: 'Home Section', description: 'Endpoint untuk konten section home / hero landing page')]
+// #[OA\Tag(name: 'About Section', description: 'Endpoint untuk konten section tentang program')]
 #[OA\Tag(name: 'Product Section', description: 'Endpoint untuk konten section produk / katalog')]
-#[OA\Tag(name: 'How To Order', description: 'Endpoint untuk konten section cara pemesanan')]
+// #[OA\Tag(name: 'How To Order', description: 'Endpoint untuk konten section cara pemesanan')]
 #[OA\Tag(name: 'Testimonial', description: 'Endpoint untuk konten section testimoni')]
 #[OA\Tag(name: 'Contact', description: 'Endpoint untuk konten section kontak')]
 abstract class Controller

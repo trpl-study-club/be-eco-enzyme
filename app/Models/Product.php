@@ -21,13 +21,13 @@ class Product extends Model
         'price',
         'image',
         'order',
+        'is_active',
     ];
 
     protected $casts = [
         'specs' => 'array',
+        'is_active' => 'boolean',
     ];
-
-    protected $touches = ['productSection'];
 
     public function productSection(): BelongsTo
     {

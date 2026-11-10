@@ -19,10 +19,10 @@ class RolePermissionSeeder extends Seeder
 
         // Create permissions for each content module
         $permissions = [
-            'manage_home_sections',
-            'manage_about_sections',
+            // 'manage_home_sections',
+            // 'manage_about_sections',
             'manage_product_sections',
-            'manage_how_to_order',
+            // 'manage_how_to_order',
             'manage_testimonials',
             'manage_contact_sections',
         ];

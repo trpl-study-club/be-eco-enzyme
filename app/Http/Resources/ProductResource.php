@@ -29,27 +29,14 @@ class ProductResource extends JsonResource
             }
         }
 
-        $specs = is_array($this->specs) ? $this->specs : [];
-
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'description' => $this->description,
-            'benefit' => $this->benefit,
-            'detail' => $this->detail,
+            'detail' => $this->detail ?? $this->description,
             'price' => $this->price,
-            'order' => $this->order,
+            'order' => (int) $this->order,
             'images' => $images,
-            'specs' => [
-                'netto' => $specs['netto'] ?? null,
-                'packaging' => $specs['packaging'] ?? null,
-                'shape' => $specs['shape'] ?? null,
-                'suitability' => $specs['suitability'] ?? null,
-                'stock' => $specs['stock'] ?? null,
-                'certification' => $specs['certification'] ?? null,
-                'ingredients' => $specs['ingredients'] ?? null,
-                'usage' => $specs['usage'] ?? null,
-            ],
+            'is_active' => (bool) $this->is_active,
         ];
     }
 }
