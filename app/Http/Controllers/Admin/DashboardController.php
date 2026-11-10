@@ -49,7 +49,7 @@ class DashboardController extends Controller
         // Produk (Products)
         $activeProductsCount = Product::where('is_active', true)->count();
         $totalProducts = Product::count();
-        $recentProducts = Product::latest('updated_at')->take(4)->get();
+        $recentProducts = Product::with('detailImages')->latest('updated_at')->take(4)->get();
 
         /*
         // Cara Pesan (How to Order)

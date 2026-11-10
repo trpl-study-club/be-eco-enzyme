@@ -3,7 +3,7 @@
 @section('title', 'Edit Produk - ' . $product->name)
 
 @section('breadcrumbs')
-    <a href="{{ route('admin.dashboard') }}" class="text-slate-500 hover:text-slate-900">Bagian Website</a>
+    <a href="{{ route('admin.dashboard') }}" class="text-slate-500 hover:text-slate-900">Halaman Utama</a>
     <span>/</span>
     <a href="{{ route('admin.product-sections.index') }}" class="text-slate-500 hover:text-slate-900">Kelola Produk</a>
     <span>/</span>
@@ -132,11 +132,11 @@
                                 class="hidden">
 
                             <div id="main-preview-wrapper" class="{{ $product->image ? '' : 'hidden' }} mb-2">
-                                <div
-                                    class="w-full sm:max-w-xs h-56 sm:h-64 mx-auto bg-white rounded-xl border border-slate-200 shadow-2xs mb-2 flex items-center justify-center overflow-hidden p-2">
+                                <div class="w-56 h-56 sm:w-64 sm:h-64 aspect-square mx-auto bg-white rounded-2xl border border-slate-200 shadow-xs mb-2.5 overflow-hidden"
+                                    style="aspect-ratio: 1 / 1;">
                                     <img id="main-preview-img"
                                         src="{{ $product->image ? asset('storage/' . $product->image) : '#' }}"
-                                        alt="Preview" class="w-full h-full object-contain rounded-lg">
+                                        alt="Preview" class="w-full h-full object-cover object-center">
                                 </div>
                                 <button type="button" onclick="event.stopPropagation(); clearMainImage()"
                                     class="text-xs text-rose-600 hover:text-rose-800 font-semibold underline cursor-pointer">
@@ -178,10 +178,10 @@
 
                         <div id="detail-images-grid" class="grid grid-cols-2 sm:grid-cols-5 gap-3 mb-3">
                             @foreach ($product->detailImages as $detailImage)
-                                <div class="existing-detail-image relative w-full h-28 sm:h-32 rounded-xl border border-gray-200 overflow-hidden bg-gray-50"
-                                    data-id="{{ $detailImage->id }}">
+                                <div class="existing-detail-image relative w-full aspect-square rounded-xl border border-gray-200 overflow-hidden bg-gray-50 shadow-2xs"
+                                    style="aspect-ratio: 1 / 1;" data-id="{{ $detailImage->id }}">
                                     <img src="{{ asset('storage/' . $detailImage->image) }}"
-                                        class="w-full h-full object-cover" alt="Detail">
+                                        class="w-full h-full object-cover object-center" alt="Detail">
                                     <button type="button"
                                         onclick="removeExistingDetailImage({{ $detailImage->id }}, this)"
                                         class="absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-rose-600 text-white flex items-center justify-center text-xs shadow-sm cursor-pointer">
@@ -377,9 +377,10 @@
                 reader.onload = function(e) {
                     const div = document.createElement('div');
                     div.className =
-                        'new-detail-image relative w-full h-28 sm:h-32 rounded-xl border border-emerald-200 overflow-hidden bg-gray-50';
+                        'new-detail-image relative w-full aspect-square rounded-xl border border-emerald-200 overflow-hidden bg-gray-50 shadow-2xs';
+                    div.style.aspectRatio = '1 / 1';
                     div.innerHTML = `
-                        <img src="${e.target.result}" class="w-full h-full object-cover" alt="Detail">
+                        <img src="${e.target.result}" class="w-full h-full object-cover object-center" alt="Detail">
                         <button type="button" onclick="removeNewDetailImageAt(${idx})"
                             class="absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-rose-600 text-white flex items-center justify-center text-xs shadow-sm cursor-pointer">
                             &times;

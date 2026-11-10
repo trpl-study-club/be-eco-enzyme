@@ -3,7 +3,7 @@
 @section('title', 'Kelola Produk')
 
 @section('breadcrumbs')
-    <a href="{{ route('admin.dashboard') }}" class="text-slate-500 hover:text-slate-900">Bagian Website</a>
+    <a href="{{ route('admin.dashboard') }}" class="text-slate-500 hover:text-slate-900">Halaman Utama</a>
     <span>/</span>
     <span class="text-slate-800 font-semibold">Kelola Produk</span>
 @endsection
@@ -21,7 +21,8 @@
 @endsection
 
 @section('page_headline', 'Daftar Produk Desa')
-@section('page_subtitle', 'Kelola setiap produk secara individual, atur harga, deskripsi singkat, foto, serta status tampil (Aktif/Nonaktif) di halaman depan website.')
+@section('page_subtitle', 'Kelola setiap produk secara individual, atur harga, deskripsi singkat, foto, serta status
+    tampil (Aktif/Nonaktif) di halaman depan website.')
 @section('status_badge')
     @php
         $activeCount = $activeCount ?? \App\Models\Product::where('is_active', true)->count();
@@ -64,8 +65,10 @@
                     <select name="status" onchange="this.form.submit()"
                         class="w-full sm:w-auto py-2.5 px-3 pr-8 text-xs bg-gray-50 border border-gray-200 rounded-xl text-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600 cursor-pointer">
                         <option value="">Semua Status Produk</option>
-                        <option value="active" {{ request('status') === 'active' ? 'selected' : '' }}>Aktif (Tampil di Website)</option>
-                        <option value="inactive" {{ request('status') === 'inactive' ? 'selected' : '' }}>Nonaktif (Disembunyikan)</option>
+                        <option value="active" {{ request('status') === 'active' ? 'selected' : '' }}>Aktif (Tampil di
+                            Website)</option>
+                        <option value="inactive" {{ request('status') === 'inactive' ? 'selected' : '' }}>Nonaktif
+                            (Disembunyikan)</option>
                     </select>
 
                     <div class="flex items-center gap-2 w-full sm:w-auto">
@@ -96,7 +99,7 @@
 
         <!-- Product Grid -->
         @if ($products->count() > 0)
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5">
                 @foreach ($products as $product)
                     @php
                         $primaryImage = $product->image ?: $product->detailImages->first()?->image;
@@ -106,35 +109,40 @@
                     <div
                         class="bg-white rounded-2xl border {{ $product->is_active ? 'border-gray-200/80 hover:border-emerald-300' : 'border-gray-200/70 bg-gray-50/40' }} shadow-xs hover:shadow-md transition-all duration-200 flex flex-col overflow-hidden group">
 
-                        <!-- Product Image Area -->
-                        <div class="relative w-full h-48 sm:h-52 bg-slate-100 overflow-hidden border-b border-gray-100 shrink-0">
-                            @if ($primaryImage)
-                                <img src="{{ asset('storage/' . $primaryImage) }}" alt="{{ $product->name }}"
-                                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 {{ $product->is_active ? '' : 'opacity-65 grayscale-25' }}">
-                            @else
-                                <div class="w-full h-full flex flex-col items-center justify-center bg-emerald-50/60 text-emerald-600/70">
-                                    <svg class="w-10 h-10 mb-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
-                                        </path>
-                                    </svg>
-                                    <span class="text-[11px] font-semibold text-slate-400">Belum Ada Foto</span>
-                                </div>
-                            @endif
+                        <!-- Product Image Area (1:1 Ratio) -->
+                        <div class="p-3 pb-0">
+                            <div class="relative w-full aspect-square rounded-xl bg-slate-100 overflow-hidden border border-gray-100"
+                                style="aspect-ratio: 1 / 1;">
+                                @if ($primaryImage)
+                                    <img src="{{ asset('storage/' . $primaryImage) }}" alt="{{ $product->name }}"
+                                        class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300 {{ $product->is_active ? '' : 'opacity-65 grayscale-25' }}">
+                                @else
+                                    <div
+                                        class="w-full h-full flex flex-col items-center justify-center bg-emerald-50/60 text-emerald-600/70">
+                                        <svg class="w-10 h-10 mb-1.5" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                            </path>
+                                        </svg>
+                                        <span class="text-[11px] font-semibold text-slate-400">Belum Ada Foto</span>
+                                    </div>
+                                @endif
 
-                            <!-- Top Left: Photo Count Badge -->
-                            @if ($totalImages > 1)
-                                <div class="absolute top-3 left-3">
-                                    <span
-                                        class="px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-white/90 text-slate-700 border border-gray-200/60 backdrop-blur-xs shadow-2xs">
-                                        {{ $totalImages }} Foto
-                                    </span>
-                                </div>
-                            @endif
+                                <!-- Top Left: Photo Count Badge -->
+                                @if ($totalImages > 1)
+                                    <div class="absolute top-2.5 left-2.5">
+                                        <span
+                                            class="px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-white/90 text-slate-700 border border-gray-200/60 backdrop-blur-xs shadow-2xs">
+                                            {{ $totalImages }} Foto
+                                        </span>
+                                    </div>
+                                @endif
+                            </div>
                         </div>
 
                         <!-- Product Details Body -->
-                        <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+                        <div class="p-4 pt-3.5 flex-1 flex flex-col justify-between space-y-4">
                             <div class="space-y-2">
                                 <div class="flex items-start justify-between gap-2">
                                     <h3 class="text-base font-bold text-slate-900 leading-snug line-clamp-1"
@@ -155,7 +163,8 @@
                             <!-- Card Actions Footer -->
                             <div class="pt-3.5 border-t border-gray-100 flex items-center justify-between gap-2">
                                 <!-- Toggle Active / Inactive -->
-                                <form action="{{ route('admin.product-sections.toggle-status', $product) }}" method="POST">
+                                <form action="{{ route('admin.product-sections.toggle-status', $product) }}"
+                                    method="POST">
                                     @csrf
                                     @method('PATCH')
                                     <button type="submit"
@@ -189,7 +198,8 @@
                                             onclick="confirmDelete(document.getElementById('delete-form-{{ $product->id }}'))"
                                             class="inline-flex items-center gap-1 px-2.5 py-1.5 text-xs font-semibold text-rose-600 hover:text-rose-700 bg-rose-50/70 hover:bg-rose-100 border border-rose-200/60 rounded-xl transition-colors cursor-pointer"
                                             title="Hapus Produk">
-                                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                     d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
                                                 </path>

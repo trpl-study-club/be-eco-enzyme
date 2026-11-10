@@ -270,16 +270,23 @@
 
                 <div class="mt-4 space-y-3">
                     @forelse($recentProducts as $prod)
+                        @php
+                            $prodImage = $prod->image ?: $prod->detailImages->first()?->image;
+                        @endphp
                         <div
                             class="p-3 rounded-2xl bg-gray-50/70 border border-gray-100 flex items-center justify-between gap-3 hover:bg-gray-50 transition-colors">
                             <div class="flex items-center gap-3 min-w-0">
-                                @if ($prod->image)
-                                    <img src="{{ asset('storage/' . $prod->image) }}"
-                                        class="w-12 h-12 rounded-xl object-cover border border-gray-200 shrink-0"
-                                        alt="{{ $prod->name }}">
+                                @if ($prodImage)
+                                    <div class="w-14 h-14 aspect-square rounded-xl overflow-hidden border border-gray-200 bg-white shrink-0"
+                                        style="aspect-ratio: 1 / 1;">
+                                        <img src="{{ asset('storage/' . $prodImage) }}"
+                                            class="w-full h-full object-cover object-center"
+                                            alt="{{ $prod->name }}">
+                                    </div>
                                 @else
                                     <div
-                                        class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-sm shrink-0 border border-emerald-100">
+                                        class="w-14 h-14 aspect-square rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-sm shrink-0 border border-emerald-100"
+                                        style="aspect-ratio: 1 / 1;">
                                         {{ strtoupper(substr($prod->name, 0, 2)) }}
                                     </div>
                                 @endif
