@@ -222,20 +222,18 @@ class ProductSectionTest extends TestCase
         $response->assertJsonPath('data.0.id', $activeProduct1->id);
         $response->assertJsonPath('data.0.name', 'Sabun Batang');
         $response->assertJsonPath('data.0.detail', 'Lembut di kulit, wangi alami dari enzim buah.');
-        $response->assertJsonPath('data.0.price', '11000');
-        $response->assertJsonPath('data.0.price_formatted', 'Rp 11.000');
+        $response->assertJsonPath('data.0.price', 'Rp 11.000');
         $response->assertJsonPath('data.0.order', 1);
         $response->assertJsonPath('data.0.is_active', true);
         $response->assertJsonCount(2, 'data.0.images');
 
         $response->assertJsonPath('data.1.id', $activeProduct2->id);
         $response->assertJsonPath('data.1.price', 'Rp 25.000');
-        $response->assertJsonPath('data.1.price_formatted', 'Rp 25.000');
         $response->assertJsonPath('data.1.order', 2);
         $response->assertJsonMissing(['id' => $inactiveProduct->id]);
 
         $firstItemKeys = array_keys($response->json('data.0'));
-        $this->assertSame(['id', 'name', 'detail', 'price', 'price_formatted', 'order', 'images', 'is_active'], $firstItemKeys);
+        $this->assertSame(['id', 'name', 'detail', 'price', 'order', 'images', 'is_active'], $firstItemKeys);
     }
 
     public function test_format_rupiah_helper_handles_numeric_null_empty_and_non_numeric_safely(): void

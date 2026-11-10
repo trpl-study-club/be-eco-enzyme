@@ -165,11 +165,6 @@
                     },
                     "price": {
                         "type": "string",
-                        "example": "11000",
-                        "nullable": true
-                    },
-                    "price_formatted": {
-                        "type": "string",
                         "example": "Rp 11.000",
                         "nullable": true
                     },
