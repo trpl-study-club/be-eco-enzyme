@@ -20,7 +20,7 @@
             <span>Lihat Website Publik</span>
         </a>
 
-        @if (auth()->user()?->hasRole('super_admin') || auth()->user()?->hasPermissionTo('manage_home_sections'))
+        {{-- @if (auth()->user()?->hasRole('super_admin') || auth()->user()?->hasPermissionTo('manage_home_sections'))
             <a href="{{ route('admin.home-sections.create') }}"
                 class="inline-flex items-center gap-1.5 px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl shadow-sm shadow-emerald-500/20 transition-all duration-150">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -28,7 +28,7 @@
                 </svg>
                 <span>Tambah Banner Beranda Baru</span>
             </a>
-        @endif
+        @endif --}}
     </div>
 @endsection
 
@@ -397,7 +397,7 @@
             </h3>
 
             <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5">
-                @if (auth()->user()?->hasRole('super_admin') || auth()->user()?->hasPermissionTo('manage_home_sections'))
+                {{-- @if (auth()->user()?->hasRole('super_admin') || auth()->user()?->hasPermissionTo('manage_home_sections'))
                     <a href="{{ route('admin.home-sections.create') }}"
                         class="p-4 rounded-2xl bg-white border border-gray-200/80 shadow-2xs hover:border-emerald-500 hover:shadow-md transition-all duration-200 flex flex-col items-center text-center group">
                         <div
@@ -411,7 +411,7 @@
                         <span class="text-xs font-bold text-slate-800">Ubah Banner Beranda</span>
                         <span class="text-[11px] text-slate-500 mt-0.5">Foto & Banner Depan</span>
                     </a>
-                @endif
+                @endif --}}
 
                 @if (auth()->user()?->hasRole('super_admin') || auth()->user()?->hasPermissionTo('manage_product_sections'))
                     <a href="{{ route('admin.product-sections.index') }}"

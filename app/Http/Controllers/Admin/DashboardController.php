@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\AboutSection;
-use App\Models\AboutSectionCard;
+// use App\Models\AboutSection;
+// use App\Models\AboutSectionCard;
 use App\Models\ContactItem;
 use App\Models\ContactSection;
-use App\Models\HomeSection;
-use App\Models\HowToOrderSection;
-use App\Models\HowToOrderStep;
+// use App\Models\HomeSection;
+// use App\Models\HowToOrderSection;
+// use App\Models\HowToOrderStep;
 use App\Models\Product;
 use App\Models\ProductSection;
 use App\Models\TestimonialItem;
@@ -24,6 +24,7 @@ class DashboardController extends Controller
      */
     public function index(): View
     {
+        /*
         // Beranda (Home)
         $totalHome = HomeSection::count();
         $activeHome = HomeSection::where('is_active', true)->count();
@@ -43,15 +44,18 @@ class DashboardController extends Controller
         }
         $totalPoints = $totalCards;
         $recentAbout = AboutSection::latest('updated_at')->take(3)->get();
+        */
 
         // Produk (Products)
         $activeProductSection = ProductSection::where('is_active', true)->first();
         $totalProducts = Product::count();
         $recentProducts = Product::latest('updated_at')->take(4)->get();
 
+        /*
         // Cara Pesan (How to Order)
         $activeHowToOrder = HowToOrderSection::where('is_active', true)->first();
         $totalSteps = HowToOrderStep::count();
+        */
 
         // Testimoni (Testimonials)
         $activeTestimonialSection = TestimonialSection::where('is_active', true)->first();
@@ -67,6 +71,7 @@ class DashboardController extends Controller
 
         // Status Kesiapan 6 Modul Landing Page
         $modulesStatus = [
+            /*
             'home' => [
                 'name' => 'Beranda',
                 'description' => 'Banner utama dan heading hero',
@@ -83,6 +88,7 @@ class DashboardController extends Controller
                 'route' => 'admin.about-sections.index',
                 'permission' => 'manage_about_sections',
             ],
+            */
             'product' => [
                 'name' => 'Produk',
                 'description' => 'Katalog produk & rincian harga',
@@ -91,6 +97,7 @@ class DashboardController extends Controller
                 'route' => 'admin.product-sections.index',
                 'permission' => 'manage_product_sections',
             ],
+            /*
             'how_to_order' => [
                 'name' => 'Cara Pesan',
                 'description' => 'Panduan alur pemesanan publik',
@@ -99,6 +106,7 @@ class DashboardController extends Controller
                 'route' => 'admin.how-to-orders.index',
                 'permission' => 'manage_how_to_order',
             ],
+            */
             'testimonial' => [
                 'name' => 'Testimoni',
                 'description' => 'Ulasan kepuasan & testimoni warga',
@@ -121,12 +129,12 @@ class DashboardController extends Controller
 
         // Waktu Pembaruan Terakhir
         $lastUpdateTimes = array_filter([
-            HomeSection::max('updated_at'),
-            AboutSection::max('updated_at'),
-            AboutSectionCard::max('updated_at'),
+            // HomeSection::max('updated_at'),
+            // AboutSection::max('updated_at'),
+            // AboutSectionCard::max('updated_at'),
             ProductSection::max('updated_at'),
             Product::max('updated_at'),
-            HowToOrderSection::max('updated_at'),
+            // HowToOrderSection::max('updated_at'),
             TestimonialSection::max('updated_at'),
             ContactSection::max('updated_at'),
         ]);
@@ -134,17 +142,17 @@ class DashboardController extends Controller
         $lastUpdated = ! empty($lastUpdateTimes) ? max($lastUpdateTimes) : null;
 
         return view('admin.dashboard', compact(
-            'totalHome',
-            'activeHome',
-            'totalAbout',
-            'activeAbout',
-            'totalPoints',
-            'totalCards',
-            'recentHome',
-            'recentAbout',
+            // 'totalHome',
+            // 'activeHome',
+            // 'totalAbout',
+            // 'activeAbout',
+            // 'totalPoints',
+            // 'totalCards',
+            // 'recentHome',
+            // 'recentAbout',
             'totalProducts',
             'recentProducts',
-            'totalSteps',
+            // 'totalSteps',
             'totalTestimonials',
             'recentTestimonials',
             'totalContactItems',

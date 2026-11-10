@@ -134,7 +134,7 @@
                     Pengaturan Halaman Depan Web
                 </p>
                 <div class="space-y-1">
-                    @if($isSuperAdmin || $user?->hasPermissionTo('manage_home_sections'))
+                    {{-- @if($isSuperAdmin || $user?->hasPermissionTo('manage_home_sections'))
                     <a href="{{ route('admin.home-sections.index') }}"
                        class="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150 {{ request()->routeIs('admin.home-sections.*') ? 'bg-white/15 text-white font-semibold shadow-sm' : 'text-emerald-200 hover:text-white hover:bg-white/5' }}">
                         <div class="flex items-center gap-3">
@@ -147,9 +147,9 @@
                             <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
                         @endif
                     </a>
-                    @endif
+                    @endif --}}
 
-                    @if($isSuperAdmin || $user?->hasPermissionTo('manage_about_sections'))
+                    {{-- @if($isSuperAdmin || $user?->hasPermissionTo('manage_about_sections'))
                     <a href="{{ route('admin.about-sections.index') }}"
                        class="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150 {{ request()->routeIs('admin.about-sections.*') ? 'bg-white/15 text-white font-semibold shadow-sm' : 'text-emerald-200 hover:text-white hover:bg-white/5' }}">
                         <div class="flex items-center gap-3">
@@ -162,7 +162,7 @@
                             <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
                         @endif
                     </a>
-                    @endif
+                    @endif --}}
 
                     @if($isSuperAdmin || $user?->hasPermissionTo('manage_product_sections'))
                     <a href="{{ route('admin.product-sections.index') }}"
@@ -179,7 +179,7 @@
                     </a>
                     @endif
 
-                    @if($isSuperAdmin || $user?->hasPermissionTo('manage_how_to_order'))
+                    {{-- @if($isSuperAdmin || $user?->hasPermissionTo('manage_how_to_order'))
                     <a href="{{ route('admin.how-to-orders.index') }}"
                        class="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150 {{ request()->routeIs('admin.how-to-orders.*') ? 'bg-white/15 text-white font-semibold shadow-sm' : 'text-emerald-200 hover:text-white hover:bg-white/5' }}">
                         <div class="flex items-center gap-3">
@@ -192,7 +192,7 @@
                             <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
                         @endif
                     </a>
-                    @endif
+                    @endif --}}
 
                     @if($isSuperAdmin || $user?->hasPermissionTo('manage_testimonials'))
                     <a href="{{ route('admin.testimonials.index') }}"

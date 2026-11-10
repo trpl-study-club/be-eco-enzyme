@@ -3,16 +3,15 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\HomeSectionResource;
-use App\Models\HomeSection;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use OpenApi\Attributes as OA;
+
+// use App\Http\Resources\HomeSectionResource;
+// use App\Models\HomeSection;
+// use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+// use OpenApi\Attributes as OA;
 
 class HomeSectionController extends Controller
 {
-    /**
-     * Display a listing of active home sections.
-     */
+    /*
     #[OA\Get(
         path: '/home',
         summary: 'Daftar Home Section aktif',
@@ -43,9 +42,6 @@ class HomeSectionController extends Controller
         return HomeSectionResource::collection($homeSections);
     }
 
-    /**
-     * Display the specified home section.
-     */
     #[OA\Get(
         path: '/home/{id}',
         summary: 'Detail Home Section',
@@ -77,4 +73,5 @@ class HomeSectionController extends Controller
     {
         return new HomeSectionResource($homeSection);
     }
+    */
 }

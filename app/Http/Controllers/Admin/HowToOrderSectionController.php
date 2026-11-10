@@ -3,14 +3,16 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\HowToOrderSection;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\View\View;
+
+// use App\Models\HowToOrderSection;
+// use Illuminate\Http\RedirectResponse;
+// use Illuminate\Http\Request;
+// use Illuminate\Support\Facades\Storage;
+// use Illuminate\View\View;
 
 class HowToOrderSectionController extends Controller
 {
+    /*
     public function index(Request $request): View
     {
         $query = HowToOrderSection::query()->with('steps')->latest();
@@ -281,4 +283,5 @@ class HowToOrderSectionController extends Controller
 
         return back()->with('success', $message);
     }
+    */
 }

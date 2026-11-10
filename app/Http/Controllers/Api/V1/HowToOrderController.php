@@ -3,13 +3,15 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\HowToOrderSectionResource;
-use App\Models\HowToOrderSection;
-use Illuminate\Http\JsonResponse;
-use OpenApi\Attributes as OA;
+
+// use App\Http\Resources\HowToOrderSectionResource;
+// use App\Models\HowToOrderSection;
+// use Illuminate\Http\JsonResponse;
+// use OpenApi\Attributes as OA;
 
 class HowToOrderController extends Controller
 {
+    /*
     #[OA\Get(
         path: '/how-to-orders',
         summary: 'Data Cara Pemesanan',
@@ -39,4 +41,5 @@ class HowToOrderController extends Controller
 
         return new HowToOrderSectionResource($howToOrderSection);
     }
+    */
 }

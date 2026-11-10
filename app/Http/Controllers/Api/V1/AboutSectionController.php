@@ -3,16 +3,15 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\AboutSectionResource;
-use App\Models\AboutSection;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use OpenApi\Attributes as OA;
+
+// use App\Http\Resources\AboutSectionResource;
+// use App\Models\AboutSection;
+// use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+// use OpenApi\Attributes as OA;
 
 class AboutSectionController extends Controller
 {
-    /**
-     * Display a listing of active about sections.
-     */
+    /*
     #[OA\Get(
         path: '/about',
         summary: 'Daftar About Section aktif',
@@ -44,9 +43,6 @@ class AboutSectionController extends Controller
         return AboutSectionResource::collection($aboutSections);
     }
 
-    /**
-     * Display the specified about section.
-     */
     #[OA\Get(
         path: '/about/{id}',
         summary: 'Detail About Section',
@@ -80,4 +76,5 @@ class AboutSectionController extends Controller
 
         return new AboutSectionResource($aboutSection);
     }
+    */
 }
