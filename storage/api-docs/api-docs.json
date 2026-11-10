@@ -165,7 +165,12 @@
                     },
                     "price": {
                         "type": "string",
-                        "example": "Rp 15.000",
+                        "example": "11000",
+                        "nullable": true
+                    },
+                    "price_formatted": {
+                        "type": "string",
+                        "example": "Rp 11.000",
                         "nullable": true
                     },
                     "order": {

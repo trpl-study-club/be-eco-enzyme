@@ -52,9 +52,9 @@
             <div class="lg:col-span-8 space-y-6">
 
                 <!-- KARTU 1: Informasi Produk -->
-                <div class="bg-white rounded-2xl border border-gray-200/80 shadow-xs p-6">
-                    <div class="flex items-center gap-3 pb-5 border-b border-gray-100 mb-5">
-                        <div class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center">
+                <div class="bg-white rounded-2xl border border-gray-200/80 shadow-xs p-4 sm:p-6">
+                    <div class="flex items-center gap-3 pb-4 sm:pb-5 border-b border-gray-100 mb-4 sm:mb-5">
+                        <div class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
@@ -74,7 +74,7 @@
                                     Nama Produk <span class="text-rose-500">*</span>
                                 </label>
                                 <input type="text" id="name" name="name"
-                                    value="{{ old('name', $product->name) }}" required maxlength="255"
+                                     value="{{ old('name', $product->name) }}" required maxlength="255"
                                     placeholder="Contoh: Sabun Batang Eco-Enzyme"
                                     class="w-full px-4 py-2.5 bg-gray-50 border border-gray-300 rounded-xl text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600 transition-all">
                             </div>
@@ -103,9 +103,9 @@
                 </div>
 
                 <!-- KARTU 2: Foto Produk -->
-                <div class="bg-white rounded-2xl border border-gray-200/80 shadow-xs p-6 space-y-6">
-                    <div class="flex items-center gap-3 pb-5 border-b border-gray-100">
-                        <div class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center">
+                <div class="bg-white rounded-2xl border border-gray-200/80 shadow-xs p-4 sm:p-6 space-y-6">
+                    <div class="flex items-center gap-3 pb-4 sm:pb-5 border-b border-gray-100">
+                        <div class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
@@ -125,14 +125,14 @@
                             Foto Utama Produk
                         </label>
                         <div id="main-image-dropzone"
-                            class="border-2 border-dashed border-gray-200 hover:border-emerald-400 rounded-xl p-6 text-center cursor-pointer transition-all bg-gray-50/50 hover:bg-emerald-50/30"
+                            class="border-2 border-dashed border-gray-200 hover:border-emerald-400 rounded-xl p-4 sm:p-6 text-center cursor-pointer transition-all bg-gray-50/50 hover:bg-emerald-50/30"
                             onclick="document.getElementById('main-image-input').click()">
                             <input type="file" id="main-image-input" name="image"
                                 accept="image/png,image/jpeg,image/jpg,image/webp" onchange="previewMainImage(this)"
                                 class="hidden">
 
                             <div id="main-preview-wrapper" class="{{ $product->image ? '' : 'hidden' }} mb-2">
-                                <div class="w-56 h-56 sm:w-64 sm:h-64 aspect-square mx-auto bg-white rounded-2xl border border-slate-200 shadow-xs mb-2.5 overflow-hidden"
+                                <div class="w-full max-w-56 sm:max-w-64 aspect-square mx-auto bg-white rounded-2xl border border-slate-200 shadow-xs mb-2.5 overflow-hidden"
                                     style="aspect-ratio: 1 / 1;">
                                     <img id="main-preview-img"
                                         src="{{ $product->image ? asset('storage/' . $product->image) : '#' }}"
@@ -144,15 +144,16 @@
                                 </button>
                             </div>
 
-                            <div id="main-dropzone-content" class="{{ $product->image ? 'hidden' : '' }}">
-                                <svg class="w-9 h-9 text-slate-400 mx-auto mb-2" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
-                                    </path>
-                                </svg>
-                                <p class="text-xs font-semibold text-slate-700">
-                                    Klik atau seret & lepas (drop) foto utama di sini
+                            <div id="main-dropzone-content" class="{{ $product->image ? 'hidden' : '' }} flex flex-col items-center justify-center">
+                                <div class="w-10 h-10 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mb-2 shrink-0">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75"
+                                            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                        </path>
+                                    </svg>
+                                </div>
+                                <p class="text-xs font-semibold text-slate-700 leading-snug">
+                                    Klik atau seret & lepas foto utama di sini
                                 </p>
                                 <p class="text-[11px] text-slate-400 mt-0.5">Format: PNG, JPG, WEBP • Maks 2MB</p>
                             </div>
@@ -161,22 +162,20 @@
 
                     <!-- Foto Tambahan / Galeri (Drag & Drop, Maks 5) -->
                     <div class="pt-4 border-t border-slate-100">
-                        <div class="flex items-center justify-between mb-2">
-                            <div>
+                        <div class="flex items-start justify-between gap-3 mb-3">
+                            <div class="min-w-0">
                                 <label class="block text-xs font-bold text-slate-700">
-                                    Foto Tambahan / Galeri <span class="text-[11px] font-normal text-slate-400">(Maksimal 5
-                                        Foto)</span>
+                                    Foto Tambahan / Galeri <span class="text-[11px] font-normal text-slate-400">(Maks 5 Foto)</span>
                                 </label>
-                                <p class="text-[11px] text-slate-400 mt-0.5">Opsional, seret & lepas foto tambahan untuk
-                                    galeri produk.</p>
+                                <p class="text-[11px] text-slate-400 mt-0.5 leading-relaxed">Opsional, tambahkan foto detail atau sudut lain produk.</p>
                             </div>
                             <span id="detail-images-counter"
-                                class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200">
+                                class="shrink-0 whitespace-nowrap text-[11px] font-bold px-2.5 py-1 rounded-full bg-slate-100 text-slate-600 border border-slate-200">
                                 {{ $product->detailImages->count() }} / 5 Foto
                             </span>
                         </div>
 
-                        <div id="detail-images-grid" class="grid grid-cols-2 sm:grid-cols-5 gap-3 mb-3">
+                        <div id="detail-images-grid" class="grid grid-cols-2 sm:grid-cols-5 gap-2.5 sm:gap-3 mb-3">
                             @foreach ($product->detailImages as $detailImage)
                                 <div class="existing-detail-image relative w-full aspect-square rounded-xl border border-gray-200 overflow-hidden bg-gray-50 shadow-2xs"
                                     style="aspect-ratio: 1 / 1;" data-id="{{ $detailImage->id }}">
@@ -196,15 +195,19 @@
                             class="hidden">
 
                         <div id="detail-images-dropzone" onclick="document.getElementById('detail-images-input').click()"
-                            class="{{ $product->detailImages->count() >= 5 ? 'hidden' : '' }} w-full py-4 px-4 border-2 border-dashed border-gray-200 hover:border-emerald-400 rounded-xl bg-gray-50/50 hover:bg-emerald-50/30 text-slate-600 hover:text-emerald-700 text-xs font-semibold flex flex-col items-center justify-center gap-1 transition-all cursor-pointer">
-                            <div class="flex items-center gap-1.5">
-                                <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            class="{{ $product->detailImages->count() >= 5 ? 'hidden' : '' }} w-full p-4 sm:p-5 border-2 border-dashed border-gray-200 hover:border-emerald-400 rounded-xl bg-gray-50/50 hover:bg-emerald-50/30 text-center flex flex-col items-center justify-center gap-1.5 transition-all cursor-pointer group">
+                            <div class="w-9 h-9 rounded-full bg-emerald-50 text-emerald-600 group-hover:bg-emerald-100 flex items-center justify-center shrink-0 transition-colors">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"
                                         d="M12 4v16m8-8H4"></path>
                                 </svg>
-                                <span>Klik atau seret & lepas (drop) foto galeri di sini</span>
                             </div>
+                            <span class="text-xs font-semibold text-slate-700 group-hover:text-emerald-700 leading-snug">
+                                Klik atau seret & lepas foto galeri di sini
+                            </span>
+                            <span class="text-[11px] text-slate-400 leading-tight">
+                                PNG, JPG, WEBP • Bisa pilih beberapa foto sekaligus
+                            </span>
                         </div>
                     </div>
                 </div>

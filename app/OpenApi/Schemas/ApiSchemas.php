@@ -133,7 +133,8 @@ use OpenApi\Attributes as OA;
         new OA\Property(property: 'id', type: 'integer', example: 1),
         new OA\Property(property: 'name', type: 'string', example: 'Sabun Batang'),
         new OA\Property(property: 'detail', type: 'string', nullable: true, example: 'Lembut di kulit, wangi alami dari enzim buah.'),
-        new OA\Property(property: 'price', type: 'string', nullable: true, example: 'Rp 15.000'),
+        new OA\Property(property: 'price', type: 'string', nullable: true, example: '11000'),
+        new OA\Property(property: 'price_formatted', type: 'string', nullable: true, example: 'Rp 11.000'),
         new OA\Property(property: 'order', type: 'integer', example: 1),
         new OA\Property(
             property: 'images',

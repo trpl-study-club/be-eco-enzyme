@@ -203,7 +203,7 @@ class ProductSectionTest extends TestCase
 
         $activeProduct1 = Product::create([
             'name' => 'Sabun Batang',
-            'price' => 'Rp 15.000',
+            'price' => '11000',
             'detail' => 'Lembut di kulit, wangi alami dari enzim buah.',
             'image' => 'product-images/sabun-batang-1.webp',
             'order' => 1,
@@ -222,17 +222,34 @@ class ProductSectionTest extends TestCase
         $response->assertJsonPath('data.0.id', $activeProduct1->id);
         $response->assertJsonPath('data.0.name', 'Sabun Batang');
         $response->assertJsonPath('data.0.detail', 'Lembut di kulit, wangi alami dari enzim buah.');
-        $response->assertJsonPath('data.0.price', 'Rp 15.000');
+        $response->assertJsonPath('data.0.price', '11000');
+        $response->assertJsonPath('data.0.price_formatted', 'Rp 11.000');
         $response->assertJsonPath('data.0.order', 1);
         $response->assertJsonPath('data.0.is_active', true);
         $response->assertJsonCount(2, 'data.0.images');
 
         $response->assertJsonPath('data.1.id', $activeProduct2->id);
+        $response->assertJsonPath('data.1.price', 'Rp 25.000');
+        $response->assertJsonPath('data.1.price_formatted', 'Rp 25.000');
         $response->assertJsonPath('data.1.order', 2);
         $response->assertJsonMissing(['id' => $inactiveProduct->id]);
 
         $firstItemKeys = array_keys($response->json('data.0'));
-        $this->assertSame(['id', 'name', 'detail', 'price', 'order', 'images', 'is_active'], $firstItemKeys);
+        $this->assertSame(['id', 'name', 'detail', 'price', 'price_formatted', 'order', 'images', 'is_active'], $firstItemKeys);
+    }
+
+    public function test_format_rupiah_helper_handles_numeric_null_empty_and_non_numeric_safely(): void
+    {
+        $this->assertSame('Rp 11.000', formatRupiah('11000'));
+        $this->assertSame('Rp 11.000', formatRupiah(11000));
+        $this->assertSame('Rp 1.250.000', formatRupiah('1250000'));
+        $this->assertSame('Rp 15.000', formatRupiah('Rp 15.000'));
+        $this->assertSame('Rp 0', formatRupiah(0));
+        $this->assertNull(formatRupiah(null));
+        $this->assertNull(formatRupiah(''));
+        $this->assertNull(formatRupiah('   '));
+        $this->assertNull(formatRupiah('Hubungi Petugas'));
+        $this->assertNull(formatRupiah([]));
     }
 
     public function test_destroy_product_deletes_images_from_storage(): void

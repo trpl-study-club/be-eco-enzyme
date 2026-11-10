@@ -293,7 +293,7 @@
                                 <div class="min-w-0">
                                     <h5 class="text-xs sm:text-sm font-bold text-slate-900 truncate">{{ $prod->name }}</h5>
                                     <p class="text-xs font-semibold text-emerald-600 mt-0.5">
-                                        {{ $prod->price ?: 'Hubungi Petugas' }}</p>
+                                        {{ $prod->price_formatted ?? ($prod->price ?: 'Hubungi Petugas') }}</p>
                                 </div>
                             </div>
                             <span

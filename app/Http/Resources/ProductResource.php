@@ -34,6 +34,7 @@ class ProductResource extends JsonResource
             'name' => $this->name,
             'detail' => $this->detail ?? $this->description,
             'price' => $this->price,
+            'price_formatted' => formatRupiah($this->price),
             'order' => (int) $this->order,
             'images' => $images,
             'is_active' => (bool) $this->is_active,

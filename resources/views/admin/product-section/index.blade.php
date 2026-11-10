@@ -152,7 +152,7 @@
                                 </div>
 
                                 <div class="text-sm font-extrabold text-emerald-700">
-                                    {{ $product->price ?: 'Hubungi Petugas' }}
+                                    {{ $product->price_formatted ?? ($product->price ?: 'Hubungi Petugas') }}
                                 </div>
 
                                 <p class="text-xs text-slate-600 leading-relaxed line-clamp-2 min-h-9">
