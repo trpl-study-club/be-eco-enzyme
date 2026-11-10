@@ -10,7 +10,7 @@ use OpenApi\Attributes as OA;
  */
 
 // ─── Home Section ────────────────────────────────────────────────────────────
-
+/*
 #[OA\Schema(
     schema: 'HomeSection',
     title: 'Home Section',
@@ -47,9 +47,10 @@ use OpenApi\Attributes as OA;
         new OA\Property(property: 'updated_at', type: 'string', format: 'date-time', example: '2026-01-15T08:30:00+07:00'),
     ]
 )]
+*/
 
 // ─── About Section ───────────────────────────────────────────────────────────
-
+/*
 #[OA\Schema(
     schema: 'AboutSection',
     title: 'About Section',
@@ -100,6 +101,7 @@ use OpenApi\Attributes as OA;
         new OA\Property(property: 'description', type: 'string', nullable: true, example: 'Telah membantu lebih dari 500 masyarakat'),
     ]
 )]
+*/
 
 // ─── Product Section ─────────────────────────────────────────────────────────
 
@@ -176,7 +178,7 @@ use OpenApi\Attributes as OA;
 )]
 
 // ─── How To Order Section ────────────────────────────────────────────────────
-
+/*
 #[OA\Schema(
     schema: 'HowToOrderSection',
     title: 'How To Order Section',
@@ -213,6 +215,7 @@ use OpenApi\Attributes as OA;
         new OA\Property(property: 'step_order', type: 'integer', example: 1),
     ]
 )]
+*/
 
 // ─── Testimonial Section ─────────────────────────────────────────────────────
 

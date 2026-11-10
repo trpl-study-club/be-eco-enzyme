@@ -16,78 +16,6 @@
         }
     ],
     "paths": {
-        "/about": {
-            "get": {
-                "tags": [
-                    "About Section"
-                ],
-                "summary": "Daftar About Section aktif",
-                "description": "Menampilkan semua about section yang berstatus aktif beserta cards dan points-nya. Digunakan untuk menampilkan konten \"Tentang Program\" di landing page.",
-                "operationId": "3a1d372655d014fe77533376ae310e86",
-                "responses": {
-                    "200": {
-                        "description": "Berhasil mengambil data",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "data": {
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "#/components/schemas/AboutSection"
-                                            }
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/about/{id}": {
-            "get": {
-                "tags": [
-                    "About Section"
-                ],
-                "summary": "Detail About Section",
-                "description": "Menampilkan detail satu about section berdasarkan ID, termasuk cards dan points-nya.",
-                "operationId": "0493a3a1ae0a8336d3ff60b06d4fd11d",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID About Section",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "example": 1
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Berhasil mengambil data",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "data": {
-                                            "$ref": "#/components/schemas/AboutSection"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Data tidak ditemukan"
-                    }
-                }
-            }
-        },
         "/contact": {
             "get": {
                 "tags": [
@@ -115,112 +43,13 @@
                 }
             }
         },
-        "/home": {
-            "get": {
-                "tags": [
-                    "Home Section"
-                ],
-                "summary": "Daftar Home Section aktif",
-                "description": "Menampilkan semua home section yang berstatus aktif. Digunakan untuk menampilkan konten hero/banner pada landing page.",
-                "operationId": "1bc2573b27ca212c9f41213ce279fa28",
-                "responses": {
-                    "200": {
-                        "description": "Berhasil mengambil data",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "data": {
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "#/components/schemas/HomeSection"
-                                            }
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/home/{id}": {
-            "get": {
-                "tags": [
-                    "Home Section"
-                ],
-                "summary": "Detail Home Section",
-                "description": "Menampilkan detail satu home section berdasarkan ID.",
-                "operationId": "8fb3efcdf3cec7c41b75b037872d5ef2",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID Home Section",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "example": 1
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Berhasil mengambil data",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "data": {
-                                            "$ref": "#/components/schemas/HomeSection"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Data tidak ditemukan"
-                    }
-                }
-            }
-        },
-        "/how-to-orders": {
-            "get": {
-                "tags": [
-                    "How To Order"
-                ],
-                "summary": "Data Cara Pemesanan",
-                "description": "Menampilkan section cara pemesanan (how to order) yang aktif beserta langkah-langkahnya. Hanya mengembalikan 1 section aktif.",
-                "operationId": "cc298726c23aacffe1e895869de66f6c",
-                "responses": {
-                    "200": {
-                        "description": "Berhasil mengambil data",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "data": {
-                                            "$ref": "#/components/schemas/HowToOrderSection"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/products": {
             "get": {
                 "tags": [
                     "Product Section"
                 ],
-                "summary": "Daftar Product Section aktif",
-                "description": "Menampilkan semua product section yang berstatus aktif beserta daftar produknya. Digunakan untuk menampilkan katalog produk di landing page.",
+                "summary": "Daftar Produk aktif",
+                "description": "Menampilkan semua produk dari product section yang berstatus aktif beserta gambar dan spesifikasinya, diurutkan berdasarkan order secara ascending.",
                 "operationId": "b6cd28d879a52d15232a6da7a92c0d11",
                 "responses": {
                     "200": {
@@ -232,7 +61,7 @@
                                         "data": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/components/schemas/ProductSection"
+                                                "$ref": "#/components/schemas/Product"
                                             }
                                         }
                                     },
@@ -240,48 +69,6 @@
                                 }
                             }
                         }
-                    }
-                }
-            }
-        },
-        "/products/{id}": {
-            "get": {
-                "tags": [
-                    "Product Section"
-                ],
-                "summary": "Detail Product Section",
-                "description": "Menampilkan detail satu product section berdasarkan ID, termasuk daftar produk di dalamnya.",
-                "operationId": "c9a48d95776ade4e77e5596fed6ed797",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "ID Product Section",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "example": 1
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Berhasil mengambil data",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "data": {
-                                            "$ref": "#/components/schemas/ProductSection"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Data tidak ditemukan"
                     }
                 }
             }
@@ -316,198 +103,12 @@
     },
     "components": {
         "schemas": {
-            "HomeSection": {
-                "title": "Home Section",
-                "description": "Konten section hero / banner pada landing page",
-                "properties": {
-                    "id": {
-                        "description": "OpenAPI Schema definitions for all API resources.\nSchemas are defined here to keep controllers clean.",
-                        "type": "integer",
-                        "example": 1
-                    },
-                    "title": {
-                        "type": "string",
-                        "example": "Selamat Datang di Program Pengabdian Dosen"
-                    },
-                    "description": {
-                        "type": "string",
-                        "example": "<p>Deskripsi program pengabdian...</p>"
-                    },
-                    "image_url": {
-                        "type": "string",
-                        "format": "url",
-                        "example": "http://localhost:8000/storage/home-sections/hero.jpg",
-                        "nullable": true
-                    },
-                    "buttons": {
-                        "properties": {
-                            "button_one": {
-                                "properties": {
-                                    "text": {
-                                        "type": "string",
-                                        "example": "Lihat Produk",
-                                        "nullable": true
-                                    },
-                                    "link": {
-                                        "type": "string",
-                                        "example": "#products",
-                                        "nullable": true
-                                    }
-                                },
-                                "type": "object"
-                            },
-                            "button_two": {
-                                "properties": {
-                                    "text": {
-                                        "type": "string",
-                                        "example": "Hubungi Kami",
-                                        "nullable": true
-                                    },
-                                    "link": {
-                                        "type": "string",
-                                        "example": "#contact",
-                                        "nullable": true
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        },
-                        "type": "object"
-                    },
-                    "is_active": {
-                        "type": "boolean",
-                        "example": true
-                    },
-                    "created_at": {
-                        "type": "string",
-                        "format": "date-time",
-                        "example": "2026-01-15T08:30:00+07:00"
-                    },
-                    "updated_at": {
-                        "type": "string",
-                        "format": "date-time",
-                        "example": "2026-01-15T08:30:00+07:00"
-                    }
-                },
-                "type": "object"
-            },
-            "AboutSection": {
-                "title": "About Section",
-                "description": "Konten section tentang program pada landing page",
-                "properties": {
-                    "id": {
-                        "type": "integer",
-                        "example": 1
-                    },
-                    "title": {
-                        "type": "string",
-                        "example": "Tentang Program Pengabdian"
-                    },
-                    "description": {
-                        "type": "string",
-                        "example": "<p>Deskripsi tentang program...</p>"
-                    },
-                    "image_url": {
-                        "type": "string",
-                        "format": "url",
-                        "example": "http://localhost:8000/storage/about-sections/about.jpg",
-                        "nullable": true
-                    },
-                    "cards": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/AboutCard"
-                        }
-                    },
-                    "points": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/AboutPoint"
-                        }
-                    },
-                    "is_active": {
-                        "type": "boolean",
-                        "example": true
-                    },
-                    "created_at": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "updated_at": {
-                        "type": "string",
-                        "format": "date-time"
-                    }
-                },
-                "type": "object"
-            },
-            "AboutCard": {
-                "title": "About Card",
-                "description": "Kartu fitur/keunggulan pada about section",
-                "properties": {
-                    "id": {
-                        "type": "integer",
-                        "example": 1
-                    },
-                    "title": {
-                        "type": "string",
-                        "example": "Pemberdayaan Masyarakat"
-                    },
-                    "description": {
-                        "type": "string",
-                        "example": "Membantu masyarakat mengembangkan potensi..."
-                    },
-                    "icon_name": {
-                        "type": "string",
-                        "example": "users",
-                        "nullable": true
-                    },
-                    "icon_image": {
-                        "type": "string",
-                        "example": "about-cards/icon.png",
-                        "nullable": true
-                    },
-                    "icon_image_url": {
-                        "type": "string",
-                        "format": "url",
-                        "nullable": true
-                    },
-                    "steps": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        },
-                        "nullable": true
-                    }
-                },
-                "type": "object"
-            },
-            "AboutPoint": {
-                "title": "About Point",
-                "description": "Poin statistik / pencapaian pada about section",
-                "properties": {
-                    "number": {
-                        "type": "string",
-                        "example": "500+",
-                        "nullable": true
-                    },
-                    "title": {
-                        "type": "string",
-                        "example": "Masyarakat Terbantu",
-                        "nullable": true
-                    },
-                    "description": {
-                        "type": "string",
-                        "example": "Telah membantu lebih dari 500 masyarakat",
-                        "nullable": true
-                    }
-                },
-                "type": "object"
-            },
             "ProductSection": {
                 "title": "Product Section",
                 "description": "Konten section produk / katalog pada landing page",
                 "properties": {
                     "id": {
+                        "description": "OpenAPI Schema definitions for all API resources.\nSchemas are defined here to keep controllers clean.",
                         "type": "integer",
                         "example": 1
                     },
@@ -553,55 +154,87 @@
                         "type": "integer",
                         "example": 1
                     },
-                    "product_section_id": {
-                        "type": "integer",
-                        "example": 1
-                    },
                     "name": {
                         "type": "string",
-                        "example": "Sabun Batang Eco-Enzyme"
+                        "example": "Sabun Batang"
                     },
                     "description": {
                         "type": "string",
-                        "example": "Sabun alami berbahan eco-enzyme yang ramah lingkungan"
+                        "example": "Lembut di kulit, wangi alami dari enzim buah."
                     },
                     "benefit": {
                         "type": "string",
-                        "example": "Aman untuk kulit sensitif anak-anak & 100% alami",
+                        "example": "Aman untuk kulit sensitif anak-anak.",
                         "nullable": true
                     },
                     "detail": {
                         "type": "string",
-                        "example": "Komposisi: Eco-enzyme, VCO, NaOH. Netto: 80gr",
+                        "example": "Sabun batang alami berbahan dasar eco-enzyme fermentasi buah.",
                         "nullable": true
                     },
                     "price": {
                         "type": "string",
-                        "example": "Rp 15.000 / batang"
-                    },
-                    "image_url": {
-                        "type": "string",
-                        "format": "url",
-                        "example": "http://localhost:8000/storage/products/sabun.jpg",
-                        "nullable": true
-                    },
-                    "detail_images": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/ProductDetailImage"
-                        }
+                        "example": "Rp 15.000"
                     },
                     "order": {
                         "type": "integer",
-                        "example": 0
+                        "example": 1
                     },
-                    "created_at": {
-                        "type": "string",
-                        "format": "date-time"
+                    "images": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "format": "url"
+                        },
+                        "example": [
+                            "https://sanitasihijau.com/storage/products/sabun-batang-1.webp",
+                            "https://sanitasihijau.com/storage/product-detail-images/sabun-batang-2.webp"
+                        ]
                     },
-                    "updated_at": {
-                        "type": "string",
-                        "format": "date-time"
+                    "specs": {
+                        "properties": {
+                            "netto": {
+                                "type": "string",
+                                "example": "100 gr",
+                                "nullable": true
+                            },
+                            "packaging": {
+                                "type": "string",
+                                "example": "Kertas Kraft Daur Ulang",
+                                "nullable": true
+                            },
+                            "shape": {
+                                "type": "string",
+                                "example": "Batang Padat (Bunga, Hexagonal)",
+                                "nullable": true
+                            },
+                            "suitability": {
+                                "type": "string",
+                                "example": "Semua Jenis Kulit & Balita",
+                                "nullable": true
+                            },
+                            "stock": {
+                                "type": "string",
+                                "example": "Tersedia (Ready Stock)",
+                                "nullable": true
+                            },
+                            "certification": {
+                                "type": "string",
+                                "example": "100% Organik & Biodegradable",
+                                "nullable": true
+                            },
+                            "ingredients": {
+                                "type": "string",
+                                "example": "Minyak kelapa murni dan fermentasi eco-enzyme buah.",
+                                "nullable": true
+                            },
+                            "usage": {
+                                "type": "string",
+                                "example": "Busakan dengan air, usapkan lembut ke seluruh tubuh, lalu bilas hingga bersih.",
+                                "nullable": true
+                            }
+                        },
+                        "type": "object"
                     }
                 },
                 "type": "object"
@@ -638,96 +271,6 @@
                 },
                 "type": "object"
             },
-            "HowToOrderSection": {
-                "title": "How To Order Section",
-                "description": "Konten section cara pemesanan pada landing page",
-                "properties": {
-                    "id": {
-                        "type": "integer",
-                        "example": 1
-                    },
-                    "title": {
-                        "type": "string",
-                        "example": "Cara Memesan"
-                    },
-                    "description": {
-                        "type": "string",
-                        "example": "Ikuti langkah berikut untuk memesan produk",
-                        "nullable": true
-                    },
-                    "button_text": {
-                        "type": "string",
-                        "example": "Pesan Sekarang",
-                        "nullable": true
-                    },
-                    "button_link": {
-                        "type": "string",
-                        "example": "https://wa.me/6281234567890",
-                        "nullable": true
-                    },
-                    "is_active": {
-                        "type": "boolean",
-                        "example": true
-                    },
-                    "steps": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/HowToOrderStep"
-                        }
-                    },
-                    "created_at": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "updated_at": {
-                        "type": "string",
-                        "format": "date-time"
-                    }
-                },
-                "type": "object"
-            },
-            "HowToOrderStep": {
-                "title": "How To Order Step",
-                "description": "Langkah-langkah dalam cara pemesanan",
-                "properties": {
-                    "id": {
-                        "type": "integer",
-                        "example": 1
-                    },
-                    "how_to_order_section_id": {
-                        "type": "integer",
-                        "example": 1
-                    },
-                    "title": {
-                        "type": "string",
-                        "example": "Pilih Produk"
-                    },
-                    "description": {
-                        "type": "string",
-                        "example": "Pilih produk yang ingin Anda pesan dari katalog",
-                        "nullable": true
-                    },
-                    "icon_name": {
-                        "type": "string",
-                        "example": "shopping-cart",
-                        "nullable": true
-                    },
-                    "icon_image": {
-                        "type": "string",
-                        "nullable": true
-                    },
-                    "icon_image_url": {
-                        "type": "string",
-                        "format": "url",
-                        "nullable": true
-                    },
-                    "step_order": {
-                        "type": "integer",
-                        "example": 1
-                    }
-                },
-                "type": "object"
-            },
             "TestimonialSection": {
                 "title": "Testimonial Section",
                 "description": "Konten section testimoni pada landing page",
@@ -739,6 +282,10 @@
                     "title": {
                         "type": "string",
                         "example": "Apa Kata Mereka?"
+                    },
+                    "is_active": {
+                        "type": "boolean",
+                        "example": true
                     },
                     "statistics": {
                         "type": "array",
@@ -903,20 +450,8 @@
     },
     "tags": [
         {
-            "name": "Home Section",
-            "description": "Endpoint untuk konten section home / hero landing page"
-        },
-        {
-            "name": "About Section",
-            "description": "Endpoint untuk konten section tentang program"
-        },
-        {
             "name": "Product Section",
             "description": "Endpoint untuk konten section produk / katalog"
-        },
-        {
-            "name": "How To Order",
-            "description": "Endpoint untuk konten section cara pemesanan"
         },
         {
             "name": "Testimonial",

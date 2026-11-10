@@ -128,7 +128,7 @@
                 $isSuperAdmin = $user?->hasRole('super_admin');
             @endphp
 
-            @if($isSuperAdmin || $user?->hasAnyPermission(['manage_home_sections', 'manage_about_sections', 'manage_product_sections', 'manage_how_to_order', 'manage_testimonials', 'manage_contact_sections']))
+            @if($isSuperAdmin || $user?->hasAnyPermission([/* 'manage_home_sections', 'manage_about_sections', */ 'manage_product_sections', /* 'manage_how_to_order', */ 'manage_testimonials', 'manage_contact_sections']))
             <div>
                 <p class="px-3 text-[11px] font-bold text-emerald-400 uppercase tracking-wider mb-2">
                     Pengaturan Halaman Depan Web

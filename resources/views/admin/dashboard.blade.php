@@ -59,7 +59,7 @@
                         </h2>
                         <p class="text-xs sm:text-sm text-slate-600 mt-1 leading-relaxed">
                             Kelola seluruh informasi dan isi website desa secara terpusat. Saat ini <strong
-                                class="text-emerald-700 font-bold">{{ $liveModulesCount }} dari 6 bagian informasi</strong> utama
+                                class="text-emerald-700 font-bold">{{ $liveModulesCount }} dari 3 bagian informasi</strong> utama
                             telah aktif dan siap dilihat oleh warga di website publik.
                         </p>
                     </div>
@@ -101,7 +101,7 @@
                 </div>
                 <div class="mt-2">
                     <h3 class="text-2xl font-extrabold text-slate-900 tracking-tight">{{ $liveModulesCount }} <span
-                            class="text-sm font-semibold text-slate-400">/ 6 Bagian</span></h3>
+                            class="text-sm font-semibold text-slate-400">/ 3 Bagian</span></h3>
                     <p class="text-xs text-emerald-600 font-semibold mt-1 flex items-center gap-1.5">
                         <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                         Tampil di Website Publik
@@ -169,7 +169,7 @@
             </div>
         </div>
 
-        <!-- Status Kesiapan 6 Bagian Informasi Landing Page (Health Check) -->
+        <!-- Status Kesiapan 3 Bagian Informasi Landing Page (Health Check) -->
         <div class="bg-white rounded-3xl border border-gray-200/80 shadow-xs p-6 sm:p-7">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-5 border-b border-gray-100 gap-3">
                 <div>
@@ -181,12 +181,12 @@
                         </svg>
                         <span>Status Kesiapan Konten Website Warga</span>
                     </h3>
-                    <p class="text-xs text-slate-600 mt-0.5">Periksa kesiapan dan kelengkapan 6 bagian informasi utama sebelum ditampilkan kepada warga dan pengunjung website.</p>
+                    <p class="text-xs text-slate-600 mt-0.5">Periksa kesiapan dan kelengkapan 3 bagian informasi utama sebelum ditampilkan kepada warga dan pengunjung website.</p>
                 </div>
                 <div class="flex items-center gap-2">
                     <span
-                        class="px-3 py-1 rounded-full text-xs font-semibold {{ $liveModulesCount === 6 ? 'bg-emerald-50 text-emerald-700 border border-emerald-200/60' : 'bg-amber-50 text-amber-700 border border-amber-200/60' }}">
-                        {{ $liveModulesCount }} / 6 Bagian Siap Tampil
+                        class="px-3 py-1 rounded-full text-xs font-semibold {{ $liveModulesCount === 3 ? 'bg-emerald-50 text-emerald-700 border border-emerald-200/60' : 'bg-amber-50 text-amber-700 border border-amber-200/60' }}">
+                        {{ $liveModulesCount }} / 3 Bagian Siap Tampil
                     </span>
                 </div>
             </div>
@@ -396,7 +396,7 @@
                 <span>Pintasan Menu Operasional Cepat</span>
             </h3>
 
-            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5">
+            <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
                 {{-- @if (auth()->user()?->hasRole('super_admin') || auth()->user()?->hasPermissionTo('manage_home_sections'))
                     <a href="{{ route('admin.home-sections.create') }}"
                         class="p-4 rounded-2xl bg-white border border-gray-200/80 shadow-2xs hover:border-emerald-500 hover:shadow-md transition-all duration-200 flex flex-col items-center text-center group">

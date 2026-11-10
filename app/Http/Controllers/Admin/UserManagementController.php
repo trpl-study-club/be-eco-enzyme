@@ -55,7 +55,14 @@ class UserManagementController extends Controller
     public function create(): View
     {
         $roles = Role::all();
-        $permissions = Permission::all();
+        $permissions = Permission::whereIn('name', [
+            // 'manage_home_sections',
+            // 'manage_about_sections',
+            'manage_product_sections',
+            // 'manage_how_to_order',
+            'manage_testimonials',
+            'manage_contact_sections',
+        ])->get();
 
         return view('admin.users.create', compact('roles', 'permissions'));
     }
@@ -98,7 +105,14 @@ class UserManagementController extends Controller
     {
         $user->load('roles', 'permissions');
         $roles = Role::all();
-        $permissions = Permission::all();
+        $permissions = Permission::whereIn('name', [
+            // 'manage_home_sections',
+            // 'manage_about_sections',
+            'manage_product_sections',
+            // 'manage_how_to_order',
+            'manage_testimonials',
+            'manage_contact_sections',
+        ])->get();
 
         return view('admin.users.edit', compact('user', 'roles', 'permissions'));
     }

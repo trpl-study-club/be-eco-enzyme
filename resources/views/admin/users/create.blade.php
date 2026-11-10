@@ -117,10 +117,10 @@
                     <div id="permissions-section" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         @php
                             $permissionLabels = [
-                                'manage_home_sections' => ['Banner Beranda', 'Kelola foto dan tulisan banner beranda'],
-                                'manage_about_sections' => ['Tentang Kami', 'Kelola penjelasan program dan kegiatan desa'],
+                                // 'manage_home_sections' => ['Banner Beranda', 'Kelola foto dan tulisan banner beranda'],
+                                // 'manage_about_sections' => ['Tentang Kami', 'Kelola penjelasan program dan kegiatan desa'],
                                 'manage_product_sections' => ['Katalog Produk', 'Kelola daftar produk desa dan harga'],
-                                'manage_how_to_order' => ['Panduan Cara Pesan', 'Kelola langkah pemesanan warga'],
+                                // 'manage_how_to_order' => ['Panduan Cara Pesan', 'Kelola langkah pemesanan warga'],
                                 'manage_testimonials' => ['Ulasan & Testimoni', 'Kelola ulasan dan pengalaman pembeli'],
                                 'manage_contact_sections' => ['Informasi Kontak', 'Kelola nomor WhatsApp, email, dan alamat'],
                             ];
