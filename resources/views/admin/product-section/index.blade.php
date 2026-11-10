@@ -131,16 +131,6 @@
                                     </span>
                                 </div>
                             @endif
-
-                            <!-- Top Right: Status Badge -->
-                            <div class="absolute top-3 right-3">
-                                <span
-                                    class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold shadow-2xs backdrop-blur-xs {{ $product->is_active ? 'bg-emerald-500 text-white' : 'bg-slate-800/80 text-slate-200' }}">
-                                    <span
-                                        class="w-1.5 h-1.5 rounded-full {{ $product->is_active ? 'bg-white' : 'bg-slate-400' }}"></span>
-                                    {{ $product->is_active ? 'Aktif' : 'Nonaktif' }}
-                                </span>
-                            </div>
                         </div>
 
                         <!-- Product Details Body -->
