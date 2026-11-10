@@ -1,0 +1,62 @@
+name: Deploy Backend to cPanel (Build Aset & SSH Pull)
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js for Vite
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install NPM Dependencies & Build Aset
+        run: |
+          npm ci || npm install
+          npm run build
+
+      - name: Transfer Vite Build ke cPanel via SCP
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.CPANEL_SSH_HOST }}
+          username: ${{ secrets.CPANEL_SSH_USER }}
+          password: ${{ secrets.CPANEL_SSH_PASSWORD }}
+          port: ${{ secrets.CPANEL_SSH_PORT }}
+          source: "public/build"
+          target: ${{ secrets.CPANEL_TARGET_PATH }}
+
+      - name: Execute Deployment Commands on cPanel
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.CPANEL_SSH_HOST }}
+          username: ${{ secrets.CPANEL_SSH_USER }}
+          password: ${{ secrets.CPANEL_SSH_PASSWORD }}
+          port: ${{ secrets.CPANEL_SSH_PORT }}
+          script: |
+            set -e
+            cd ${{ secrets.CPANEL_TARGET_PATH }}
+            
+            # 1. Ambil update kode PHP/Blade terbaru
+            git fetch origin main
+            git reset --hard origin/main
+            
+            # 2. Update dependensi Composer
+            composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
+            
+            # 3. Migrasi Database (Aman, hanya tabel baru)
+            php artisan migrate --force
+            
+            # 4. Bersihkan dan buat ulang Cache (View, Route, Config)
+            php artisan optimize:clear
+            php artisan optimize
+            
+            echo "Deployment Backend & Aset Berhasil!"
