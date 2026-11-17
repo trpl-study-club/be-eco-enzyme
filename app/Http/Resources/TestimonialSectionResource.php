@@ -16,9 +16,13 @@ class TestimonialSectionResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'title' => $this->title,
+            'title' => $this->is_active ? $this->title : null,
             'is_active' => (bool) $this->is_active,
             'statistics' => $this->whenLoaded('statistics', function () {
+                if (! $this->is_active) {
+                    return [];
+                }
+
                 return $this->statistics->map(function ($stat) {
                     return [
                         'id' => $stat->id,

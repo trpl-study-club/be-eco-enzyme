@@ -3,11 +3,11 @@
 @section('title', 'Edit Section Kontak')
 
 @section('breadcrumbs')
-    <a href="{{ route('admin.dashboard') }}" class="text-slate-500 hover:text-slate-900">Halaman Depan</a>
+    <a href="{{ route('admin.dashboard') }}" class="text-slate-500 hover:text-slate-900">Halaman Utama</a>
     <span>/</span>
-    <a href="{{ route('admin.contact-sections.index') }}" class="text-slate-500 hover:text-slate-900">Bagian Kontak</a>
+    <a href="{{ route('admin.contact-sections.index') }}" class="text-slate-500 hover:text-slate-900">Informasi Kontak</a>
     <span>/</span>
-    <span class="text-slate-800">Ubah</span>
+    <span class="text-slate-800 font-semibold">Edit</span>
 @endsection
 
 @section('page_title', 'Kelola Bagian Kontak')
@@ -145,12 +145,12 @@
                     <!-- Items Container (Repeater) -->
                     <div id="contacts-container" class="space-y-4">
                         @forelse($contactSection->items as $idx => $item)
-                            <div class="contact-card-item rounded-xl border border-slate-200 bg-slate-50/40 overflow-hidden transition-all shadow-2xs"
+                            <div class="contact-card-item rounded-xl border border-gray-200/90 bg-white overflow-hidden transition-all shadow-2xs"
                                 data-index="{{ $idx }}">
                                 <input type="hidden" name="items[{{ $idx }}][id]" value="{{ $item->id }}">
 
                                 <!-- Item Header Accordion -->
-                                <div class="p-3.5 bg-slate-100/70 border-b border-slate-200/70 flex items-center justify-between cursor-pointer"
+                                <div class="p-3.5 bg-slate-50/70 border-b border-gray-100 flex items-center justify-between cursor-pointer"
                                     onclick="toggleCardAccordion(this)">
                                     <div class="flex items-center gap-2.5">
                                         <span
@@ -182,52 +182,43 @@
                                 <div class="contact-card-body p-4 space-y-4 bg-white">
                                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                         <div>
-                                            <label class="block text-xs font-semibold text-slate-700 mb-1">
-                                                Nama Saluran / Label Kontak <span class="text-rose-500">*</span>
+                                            <label class="block text-xs font-semibold text-slate-700 mb-1.5">
+                                                Nama Kontak <span class="text-rose-500">*</span>
                                             </label>
                                             <input type="text" name="items[{{ $idx }}][label]"
                                                 value="{{ old('items.' . $idx . '.label', $item->label) }}" required
-                                                placeholder="Contoh: WhatsApp Kami, Alamat Kantor, Email Resmi"
+                                                placeholder="Contoh: WhatsApp, Email, Alamat Kantor"
                                                 oninput="updateContactHeaderTitle(this)"
                                                 class="contact-label-input w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600">
                                         </div>
                                         <div>
-                                            <label class="block text-xs font-semibold text-slate-700 mb-1">
-                                                Jenis Kontak (Boleh Kosong)
+                                            <label class="block text-xs font-semibold text-slate-700 mb-1.5">
+                                                Isi Kontak <span class="text-rose-500">*</span>
                                             </label>
-                                            <input type="text" name="items[{{ $idx }}][type]"
-                                                value="{{ old('items.' . $idx . '.type', $item->type) }}"
-                                                placeholder="Contoh: whatsapp, lokasi, email"
+                                            <input type="text" name="items[{{ $idx }}][value]"
+                                                value="{{ old('items.' . $idx . '.value', $item->value) }}" required
+                                                placeholder="Contoh: +62 812 3456 7890 atau Desa Jeruklegi"
                                                 class="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600">
                                         </div>
-                                    </div>
-
-                                    <div>
-                                        <label class="block text-xs font-semibold text-slate-700 mb-1">
-                                            Isi Kontak / Nomor / Alamat <span class="text-rose-500">*</span>
-                                        </label>
-                                        <input type="text" name="items[{{ $idx }}][value]"
-                                            value="{{ old('items.' . $idx . '.value', $item->value) }}" required
-                                            placeholder="Contoh: 081234567890 atau Desa Jeruklegi, Jawa Tengah"
-                                            class="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600">
                                     </div>
 
                                     <!-- Icon Picker Component (Lucide + Upload) -->
                                     <x-form.icon-picker
                                         name="items[{{ $idx }}][icon_name]"
                                         :value="old('items.' . $idx . '.icon_name', $item->icon_name)"
-                                        label="Ikon Kontak (Pilih Simbol atau Unggah Gambar)"
+                                        label="Ikon atau Gambar"
                                         :with-upload="true"
                                         upload-name="items[{{ $idx }}][icon_image]"
                                         :upload-value="$item->icon_image_url"
                                         remove-name="items[{{ $idx }}][remove_icon_image]"
+                                        hint="Pilih ikon Lucide atau unggah gambar kustom (PNG/SVG, maks 512KB)."
                                     />
                                 </div>
                             </div>
                         @empty
-                            <div class="contact-card-item rounded-xl border border-slate-200 bg-slate-50/40 overflow-hidden transition-all shadow-2xs"
+                            <div class="contact-card-item rounded-xl border border-gray-200/90 bg-white overflow-hidden transition-all shadow-2xs"
                                 data-index="0">
-                                <div class="p-3.5 bg-slate-100/70 border-b border-slate-200/70 flex items-center justify-between cursor-pointer"
+                                <div class="p-3.5 bg-slate-50/70 border-b border-gray-100 flex items-center justify-between cursor-pointer"
                                     onclick="toggleCardAccordion(this)">
                                     <div class="flex items-center gap-2.5">
                                         <span
@@ -256,39 +247,31 @@
                                 <div class="contact-card-body p-4 space-y-4 bg-white">
                                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                         <div>
-                                            <label class="block text-xs font-semibold text-slate-700 mb-1">
-                                                Nama Saluran / Label Kontak <span class="text-rose-500">*</span>
+                                            <label class="block text-xs font-semibold text-slate-700 mb-1.5">
+                                                Nama Kontak <span class="text-rose-500">*</span>
                                             </label>
                                             <input type="text" name="items[0][label]" value="" required
-                                                placeholder="Contoh: WhatsApp Kami, Alamat Kantor, Email Resmi"
+                                                placeholder="Contoh: WhatsApp, Email, Alamat Kantor"
                                                 oninput="updateContactHeaderTitle(this)"
                                                 class="contact-label-input w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600">
                                         </div>
                                         <div>
-                                            <label class="block text-xs font-semibold text-slate-700 mb-1">
-                                                Jenis Kontak (Boleh Kosong)
+                                            <label class="block text-xs font-semibold text-slate-700 mb-1.5">
+                                                Isi Kontak <span class="text-rose-500">*</span>
                                             </label>
-                                            <input type="text" name="items[0][type]" value=""
-                                                placeholder="Contoh: whatsapp, lokasi, email"
+                                            <input type="text" name="items[0][value]" value="" required
+                                                placeholder="Contoh: +62 812 3456 7890 atau Desa Jeruklegi"
                                                 class="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600">
                                         </div>
                                     </div>
 
-                                    <div>
-                                        <label class="block text-xs font-semibold text-slate-700 mb-1">
-                                            Isi Kontak / Nomor / Alamat <span class="text-rose-500">*</span>
-                                        </label>
-                                        <input type="text" name="items[0][value]" value="" required
-                                            placeholder="Contoh: 081234567890 atau Desa Jeruklegi, Jawa Tengah"
-                                            class="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600">
-                                    </div>
-
                                     <x-form.icon-picker
                                         name="items[0][icon_name]"
-                                        label="Ikon Kontak (Pilih Simbol atau Unggah Gambar)"
+                                        label="Ikon atau Gambar"
                                         :with-upload="true"
                                         upload-name="items[0][icon_image]"
                                         remove-name="items[0][remove_icon_image]"
+                                        hint="Pilih ikon Lucide atau unggah gambar kustom (PNG/SVG, maks 512KB)."
                                     />
                                 </div>
                             </div>
@@ -480,7 +463,16 @@
         const container = document.getElementById('contacts-container');
         const items = container.querySelectorAll('.contact-card-item');
         if (items.length <= 1) {
-            alert('Minimal harus ada 1 saluran kontak.');
+            if (typeof Swal !== 'undefined') {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Tidak Dapat Dihapus',
+                    text: 'Minimal harus terdapat 1 saluran kontak.',
+                    confirmButtonColor: '#059669'
+                });
+            } else {
+                alert('Minimal harus ada 1 saluran kontak.');
+            }
             return;
         }
         btn.closest('.contact-card-item').remove();
@@ -504,7 +496,7 @@
             const idInput = card.querySelector('input[name*="[id]"]');
             if (idInput) idInput.name = `items[${index}][id]`;
 
-            const typeInput = card.querySelector('input[name*="[type]"]');
+            const typeInput = card.querySelector('[name*="[type]"]');
             if (typeInput) typeInput.name = `items[${index}][type]`;
 
             const valInput = card.querySelector('input[name*="[value]"]');
@@ -526,9 +518,9 @@
         const newIndex = container.querySelectorAll('.contact-card-item').length;
 
         const cardHtml = `
-            <div class="contact-card-item rounded-xl border border-slate-200 bg-slate-50/40 overflow-hidden transition-all shadow-2xs"
+            <div class="contact-card-item rounded-xl border border-gray-200/90 bg-white overflow-hidden transition-all shadow-2xs"
                 data-index="${newIndex}">
-                <div class="p-3.5 bg-slate-100/70 border-b border-slate-200/70 flex items-center justify-between cursor-pointer"
+                <div class="p-3.5 bg-slate-50/70 border-b border-gray-100 flex items-center justify-between cursor-pointer"
                     onclick="toggleCardAccordion(this)">
                     <div class="flex items-center gap-2.5">
                         <span class="w-6 h-6 rounded-lg bg-emerald-600 text-white font-bold text-xs flex items-center justify-center contact-badge-num">${newIndex + 1}</span>
@@ -557,37 +549,28 @@
                 <div class="contact-card-body p-4 space-y-4 bg-white">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-xs font-semibold text-slate-700 mb-1">
-                                Nama Saluran / Label Kontak <span class="text-rose-500">*</span>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1.5">
+                                Nama Kontak <span class="text-rose-500">*</span>
                             </label>
                             <input type="text" name="items[${newIndex}][label]" value="" required
-                                placeholder="Contoh: WhatsApp Kami, Alamat Kantor, Email Resmi"
+                                placeholder="Contoh: WhatsApp, Email, Alamat Kantor"
                                 oninput="updateContactHeaderTitle(this)"
                                 class="contact-label-input w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600">
                         </div>
                         <div>
-                            <label class="block text-xs font-semibold text-slate-700 mb-1">
-                                Jenis Kontak (Boleh Kosong)
+                            <label class="block text-xs font-semibold text-slate-700 mb-1.5">
+                                Isi Kontak <span class="text-rose-500">*</span>
                             </label>
-                            <input type="text" name="items[${newIndex}][type]" value=""
-                                placeholder="Contoh: whatsapp, lokasi, email"
+                            <input type="text" name="items[${newIndex}][value]" value="" required
+                                placeholder="Contoh: +62 812 3456 7890 atau Desa Jeruklegi"
                                 class="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600">
                         </div>
-                    </div>
-
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-700 mb-1">
-                            Isi Kontak / Nomor / Alamat <span class="text-rose-500">*</span>
-                        </label>
-                        <input type="text" name="items[${newIndex}][value]" value="" required
-                            placeholder="Contoh: 081234567890 atau Desa Jeruklegi, Jawa Tengah"
-                            class="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600">
                     </div>
 
                     <!-- Icon Picker Component (Lucide + Upload) -->
                     <div class="icon-picker-component">
                         <label class="block text-xs font-semibold text-slate-700 mb-1.5">
-                            Ikon Kontak (Pilih Simbol atau Unggah Gambar)
+                            Ikon atau Gambar
                         </label>
                         <input type="hidden" name="items[${newIndex}][icon_name]" class="icon-picker-input card-icon-name-input" value="">
                         <input type="hidden" name="items[${newIndex}][remove_icon_image]" value="0" class="icon-remove-flag card-remove-icon-flag">

@@ -165,7 +165,7 @@
                     },
                     "price": {
                         "type": "string",
-                        "example": "Rp 15.000",
+                        "example": "Rp 11.000",
                         "nullable": true
                     },
                     "order": {

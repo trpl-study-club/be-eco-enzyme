@@ -29,7 +29,9 @@ class ContactController extends Controller
     )]
     public function index(): ContactSectionResource|JsonResponse
     {
-        $contactSection = ContactSection::with('items')
+        $contactSection = ContactSection::with(['items' => function ($query) {
+            $query->where('is_active', true)->orderBy('order')->orderBy('id');
+        }])
             ->where('is_active', true)
             ->latest()
             ->first();

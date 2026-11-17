@@ -54,7 +54,11 @@
                             "{{ $section->title }}"
                         </h2>
                         <p class="text-xs text-slate-500 mt-0.5">
-                            Judul ulasan pembeli yang tampil di halaman depan website.
+                            @if ($section->is_active)
+                                Judul dan angka statistik tampil bersama daftar ulasan pelanggan di halaman depan website.
+                            @else
+                                Judul dan angka statistik sedang disembunyikan di website, sementara daftar ulasan pelanggan tetap tampil.
+                            @endif
                         </p>
                     </div>
                 </div>
@@ -73,7 +77,7 @@
                             </span>
                         </div>
                         <label class="relative inline-flex items-center cursor-pointer"
-                            title="{{ $section->is_active ? 'Klik untuk simpan sebagai draf (sembunyikan dari website)' : 'Klik untuk tampilkan bagian testimoni di website' }}">
+                            title="{{ $section->is_active ? 'Klik untuk menyembunyikan judul & statistik dari website (ulasan pelanggan tetap tampil)' : 'Klik untuk menampilkan judul & statistik di website' }}">
                             <input type="checkbox" {{ $section->is_active ? 'checked' : '' }} onchange="this.form.submit()"
                                 class="sr-only peer">
                             <div

@@ -23,6 +23,7 @@ class ContactItemResource extends JsonResource
             'icon_image' => $this->icon_image,
             'icon_image_url' => $this->icon_image_url,
             'order' => $this->order,
+            'is_active' => (bool) ($this->is_active ?? true),
         ];
     }
 }

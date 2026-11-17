@@ -235,6 +235,17 @@ class TestimonialHubTest extends TestCase
             'is_active' => true,
         ]);
 
+        $section->statistics()->create([
+            'value' => '500+',
+            'description' => 'Pelanggan Puas',
+        ]);
+
+        $section->testimonials()->create([
+            'name' => 'Siti Aminah',
+            'location' => 'Cilacap',
+            'quote' => 'Produk sangat bermanfaat dan ramah lingkungan.',
+        ]);
+
         $response = $this->actingAs($this->user)
             ->from('/admin/testimonials')
             ->patch('/admin/testimonials/toggle-status');
@@ -246,7 +257,9 @@ class TestimonialHubTest extends TestCase
             'is_active' => false,
         ]);
 
-        $this->actingAs($this->user)->get('/admin/testimonials')->assertStatus(200);
+        $this->actingAs($this->user)->get('/admin/testimonials')
+            ->assertStatus(200)
+            ->assertSee('Siti Aminah');
         $this->assertDatabaseHas('testimonial_sections', [
             'id' => $section->id,
             'is_active' => false,
@@ -254,7 +267,21 @@ class TestimonialHubTest extends TestCase
 
         $this->getJson('/api/v1/testimonials')
             ->assertStatus(200)
-            ->assertExactJson(['data' => null]);
+            ->assertJson([
+                'data' => [
+                    'id' => $section->id,
+                    'title' => null,
+                    'is_active' => false,
+                    'statistics' => [],
+                    'testimonials' => [
+                        [
+                            'name' => 'Siti Aminah',
+                            'location' => 'Cilacap',
+                            'quote' => 'Produk sangat bermanfaat dan ramah lingkungan.',
+                        ],
+                    ],
+                ],
+            ]);
 
         $this->actingAs($this->user)
             ->from('/admin/testimonials')
@@ -265,5 +292,12 @@ class TestimonialHubTest extends TestCase
             'id' => $section->id,
             'is_active' => true,
         ]);
+
+        $this->getJson('/api/v1/testimonials')
+            ->assertStatus(200)
+            ->assertJsonPath('data.title', 'Apa Kata Mereka?')
+            ->assertJsonPath('data.is_active', true)
+            ->assertJsonCount(1, 'data.statistics')
+            ->assertJsonCount(1, 'data.testimonials');
     }
 }

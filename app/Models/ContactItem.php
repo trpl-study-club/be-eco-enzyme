@@ -19,10 +19,16 @@ class ContactItem extends Model
         'icon_name',
         'icon_image',
         'order',
+        'is_active',
+    ];
+
+    protected $attributes = [
+        'is_active' => true,
     ];
 
     protected $casts = [
         'order' => 'integer',
+        'is_active' => 'boolean',
     ];
 
     protected $touches = ['contactSection'];

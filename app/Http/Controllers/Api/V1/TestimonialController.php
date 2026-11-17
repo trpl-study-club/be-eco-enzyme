@@ -13,7 +13,7 @@ class TestimonialController extends Controller
     #[OA\Get(
         path: '/testimonials',
         summary: 'Data Testimoni',
-        description: 'Menampilkan section testimoni yang aktif beserta daftar statistik dan testimoni pelanggan. Hanya mengembalikan 1 section aktif.',
+        description: 'Menampilkan section testimoni beserta daftar statistik dan testimoni pelanggan. Jika status section nonaktif, judul dan statistik disembunyikan sedangkan daftar testimoni pelanggan tetap ditampilkan.',
         tags: ['Testimonial'],
         responses: [
             new OA\Response(
@@ -31,7 +31,8 @@ class TestimonialController extends Controller
     {
         $testimonialSection = TestimonialSection::with(['statistics', 'testimonials'])
             ->where('is_active', true)
-            ->first();
+            ->first()
+            ?? TestimonialSection::with(['statistics', 'testimonials'])->first();
 
         if (! $testimonialSection) {
             return response()->json(['data' => null]);

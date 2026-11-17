@@ -38,4 +38,9 @@ class Product extends Model
     {
         return $this->hasMany(ProductDetailImage::class)->orderBy('order');
     }
+
+    public function getPriceFormattedAttribute(): ?string
+    {
+        return formatRupiah($this->price);
+    }
 }
