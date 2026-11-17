@@ -309,7 +309,7 @@ class ContactSectionTest extends TestCase
         ]);
     }
 
-    public function test_contact_hub_renders_clean_cards_and_action_links_without_type_input(): void
+    public function test_contact_hub_renders_clean_cards_without_copy_or_external_action_buttons(): void
     {
         ContactSection::where('is_active', true)->update(['is_active' => false]);
 
@@ -347,15 +347,16 @@ class ContactSectionTest extends TestCase
 
         $response->assertOk();
         $response->assertSee('WhatsApp Layanan');
-        $response->assertSee('https://wa.me/6281234567890');
-        $response->assertSee('Buka Chat');
         $response->assertSee('Alamat Jawa Tengah');
-        $response->assertSee('Lihat di Peta');
         $response->assertSee('Jadwal Operasional');
         $response->assertSee('Nama Kontak');
         $response->assertSee('Isi Kontak');
         $response->assertSee('Ikon atau Gambar');
         $response->assertDontSee('Kategori Saluran');
+        $response->assertDontSee('Lihat di Peta');
+        $response->assertDontSee('Buka Chat');
+        $response->assertDontSee('Kirim Email');
+        $response->assertDontSee('Salin Isi Kontak');
     }
 
     public function test_admin_can_store_and_update_contact_item_without_type_field(): void

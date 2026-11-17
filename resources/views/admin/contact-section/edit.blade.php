@@ -3,11 +3,11 @@
 @section('title', 'Edit Section Kontak')
 
 @section('breadcrumbs')
-    <a href="{{ route('admin.dashboard') }}" class="text-slate-500 hover:text-slate-900">Halaman Depan</a>
+    <a href="{{ route('admin.dashboard') }}" class="text-slate-500 hover:text-slate-900">Halaman Utama</a>
     <span>/</span>
-    <a href="{{ route('admin.contact-sections.index') }}" class="text-slate-500 hover:text-slate-900">Bagian Kontak</a>
+    <a href="{{ route('admin.contact-sections.index') }}" class="text-slate-500 hover:text-slate-900">Informasi Kontak</a>
     <span>/</span>
-    <span class="text-slate-800">Ubah</span>
+    <span class="text-slate-800 font-semibold">Edit</span>
 @endsection
 
 @section('page_title', 'Kelola Bagian Kontak')

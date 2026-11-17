@@ -5,9 +5,9 @@
 @section('breadcrumbs')
     <a href="{{ route('admin.dashboard') }}" class="text-slate-500 hover:text-slate-900">Halaman Utama</a>
     <span>/</span>
-    <a href="{{ route('admin.contact-sections.index') }}" class="text-slate-500 hover:text-slate-900">Kontak</a>
+    <a href="{{ route('admin.contact-sections.index') }}" class="text-slate-500 hover:text-slate-900">Informasi Kontak</a>
     <span>/</span>
-    <span class="text-slate-800">Tambah Baru</span>
+    <span class="text-slate-800 font-semibold">Tambah Baru</span>
 @endsection
 
 @section('page_title', 'Kelola Section Kontak')
