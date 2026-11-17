@@ -131,6 +131,8 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
             ->name('contact-sections.toggle-hub-status');
         Route::post('/contact-sections/items', [ContactSectionController::class, 'storeItem'])
             ->name('contact-sections.items.store');
+        Route::patch('/contact-sections/items/{contactItem}/toggle-status', [ContactSectionController::class, 'toggleItemStatus'])
+            ->name('contact-sections.items.toggle-status');
         Route::put('/contact-sections/items/{contactItem}', [ContactSectionController::class, 'updateItem'])
             ->name('contact-sections.items.update');
         Route::delete('/contact-sections/items/{contactItem}', [ContactSectionController::class, 'destroyItem'])

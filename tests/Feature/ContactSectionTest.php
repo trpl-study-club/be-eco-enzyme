@@ -456,6 +456,81 @@ class ContactSectionTest extends TestCase
 
         $response->assertOk();
         $response->assertSee('Belum Ada Saluran Kontak');
-        $response->assertSee('0 Saluran');
+        $response->assertSee('0 Saluran Aktif');
+    }
+
+    public function test_admin_can_toggle_individual_contact_item_status_and_filter_by_status(): void
+    {
+        ContactSection::where('is_active', true)->update(['is_active' => false]);
+
+        $section = ContactSection::create([
+            'title' => 'Hubungi Kami',
+            'description' => 'Saluran kontak resmi desa.',
+            'is_active' => true,
+        ]);
+
+        $activeItem = $section->items()->create([
+            'type' => 'whatsapp',
+            'label' => 'WhatsApp Aktif',
+            'value' => '+62 899 7777 6666',
+            'icon_name' => 'phone',
+            'order' => 1,
+            'is_active' => true,
+        ]);
+
+        $toggleTarget = $section->items()->create([
+            'type' => 'email',
+            'label' => 'Email Nonaktif',
+            'value' => 'nonaktif@jeruklegi.id',
+            'icon_name' => 'mail',
+            'order' => 2,
+            'is_active' => true,
+        ]);
+
+        $this->actingAs($this->user)
+            ->from(route('admin.contact-sections.index'))
+            ->patch(route('admin.contact-sections.items.toggle-status', $toggleTarget))
+            ->assertRedirect(route('admin.contact-sections.index'))
+            ->assertSessionHas('success');
+
+        $this->assertDatabaseHas('contact_items', [
+            'id' => $toggleTarget->id,
+            'is_active' => false,
+        ]);
+
+        $this->actingAs($this->user)
+            ->get(route('admin.contact-sections.index', ['status' => 'active']))
+            ->assertOk()
+            ->assertSee('WhatsApp Aktif')
+            ->assertSee('+62 899 7777 6666')
+            ->assertDontSee('nonaktif@jeruklegi.id');
+
+        $this->actingAs($this->user)
+            ->get(route('admin.contact-sections.index', ['status' => 'inactive']))
+            ->assertOk()
+            ->assertSee('Email Nonaktif')
+            ->assertSee('nonaktif@jeruklegi.id')
+            ->assertDontSee('+62 899 7777 6666');
+
+        $this->getJson('/api/v1/contact')
+            ->assertOk()
+            ->assertJsonCount(1, 'data.items')
+            ->assertJsonPath('data.whatsapp', '+62 899 7777 6666')
+            ->assertJsonPath('data.email', null);
+
+        $this->actingAs($this->user)
+            ->from(route('admin.contact-sections.index'))
+            ->patch(route('admin.contact-sections.items.toggle-status', $toggleTarget))
+            ->assertRedirect(route('admin.contact-sections.index'));
+
+        $this->assertDatabaseHas('contact_items', [
+            'id' => $toggleTarget->id,
+            'is_active' => true,
+        ]);
+
+        $this->getJson('/api/v1/contact')
+            ->assertOk()
+            ->assertJsonCount(2, 'data.items')
+            ->assertJsonPath('data.email', 'nonaktif@jeruklegi.id');
     }
 }

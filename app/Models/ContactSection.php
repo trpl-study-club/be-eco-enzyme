@@ -26,29 +26,35 @@ class ContactSection extends Model
     }
 
     /**
-     * Helper accessor for direct location string.
+     * Helper accessor for direct location string from active items.
      */
     public function getLocationAttribute(): ?string
     {
-        return $this->items->firstWhere('type', 'location')?->value
-            ?? $this->items->first(fn ($item) => strtolower($item->label) === 'lokasi')?->value;
+        $activeItems = $this->items->filter(fn ($item) => $item->is_active !== false);
+
+        return $activeItems->firstWhere('type', 'location')?->value
+            ?? $activeItems->first(fn ($item) => strtolower($item->label) === 'lokasi')?->value;
     }
 
     /**
-     * Helper accessor for direct email string.
+     * Helper accessor for direct email string from active items.
      */
     public function getEmailAttribute(): ?string
     {
-        return $this->items->firstWhere('type', 'email')?->value
-            ?? $this->items->first(fn ($item) => strtolower($item->label) === 'email')?->value;
+        $activeItems = $this->items->filter(fn ($item) => $item->is_active !== false);
+
+        return $activeItems->firstWhere('type', 'email')?->value
+            ?? $activeItems->first(fn ($item) => strtolower($item->label) === 'email')?->value;
     }
 
     /**
-     * Helper accessor for direct whatsapp string.
+     * Helper accessor for direct whatsapp string from active items.
      */
     public function getWhatsappAttribute(): ?string
     {
-        return $this->items->firstWhere('type', 'whatsapp')?->value
-            ?? $this->items->first(fn ($item) => strtolower($item->label) === 'whatsapp')?->value;
+        $activeItems = $this->items->filter(fn ($item) => $item->is_active !== false);
+
+        return $activeItems->firstWhere('type', 'whatsapp')?->value
+            ?? $activeItems->first(fn ($item) => strtolower($item->label) === 'whatsapp')?->value;
     }
 }

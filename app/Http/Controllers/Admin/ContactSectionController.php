@@ -99,9 +99,25 @@ class ContactSectionController extends Controller
             $query->where('type', $request->input('type'));
         }
 
-        $contactItems = $query->get();
+        if ($request->filled('status')) {
+            $status = $request->input('status');
+            if ($status === 'active') {
+                $query->where('is_active', true);
+            } elseif ($status === 'inactive') {
+                $query->where('is_active', false);
+            }
+        }
 
-        return view('admin.contact-section.index', compact('section', 'contactItems'));
+        $contactItems = $query->get();
+        $activeCount = $section->items()->where('is_active', true)->count();
+        $inactiveCount = $section->items()->where('is_active', false)->count();
+
+        return view('admin.contact-section.index', compact(
+            'section',
+            'contactItems',
+            'activeCount',
+            'inactiveCount'
+        ));
     }
 
     /**
@@ -161,6 +177,7 @@ class ContactSectionController extends Controller
             'icon_name' => filled($validated['icon_name'] ?? null) ? trim($validated['icon_name']) : null,
             'icon_image' => $iconImagePath,
             'order' => $nextOrder,
+            'is_active' => $request->has('is_active') ? $request->boolean('is_active') : true,
         ]);
 
         $section->touch();
@@ -243,6 +260,25 @@ class ContactSectionController extends Controller
 
         return redirect()->route('admin.contact-sections.index')
             ->with('success', "Saluran kontak \"{$label}\" berhasil dihapus.");
+    }
+
+    /**
+     * Toggle the active status of a single contact channel item.
+     */
+    public function toggleItemStatus(ContactItem $contactItem): RedirectResponse
+    {
+        $newStatus = ! $contactItem->is_active;
+
+        $contactItem->update([
+            'is_active' => $newStatus,
+        ]);
+        $contactItem->touch();
+
+        $message = $newStatus
+            ? "Saluran kontak \"{$contactItem->label}\" berhasil diaktifkan dan ditampilkan di website."
+            : "Saluran kontak \"{$contactItem->label}\" berhasil dinonaktifkan dari website.";
+
+        return back()->with('success', $message);
     }
 
     /**
