@@ -123,8 +123,19 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::patch('/testimonial-sections/{testimonialSection}/toggle-status', [TestimonialSectionController::class, 'toggleStatus'])
         ->name('testimonial-sections.toggle-status');
 
-    // Contact Section Management
+    // Contact Hub Management
     Route::middleware('permission:manage_contact_sections')->group(function () {
+        Route::post('/contact-sections/header', [ContactSectionController::class, 'updateHeader'])
+            ->name('contact-sections.update-header');
+        Route::patch('/contact-sections/toggle-status', [ContactSectionController::class, 'toggleStatus'])
+            ->name('contact-sections.toggle-hub-status');
+        Route::post('/contact-sections/items', [ContactSectionController::class, 'storeItem'])
+            ->name('contact-sections.items.store');
+        Route::put('/contact-sections/items/{contactItem}', [ContactSectionController::class, 'updateItem'])
+            ->name('contact-sections.items.update');
+        Route::delete('/contact-sections/items/{contactItem}', [ContactSectionController::class, 'destroyItem'])
+            ->name('contact-sections.items.destroy');
+
         Route::patch('/contact-sections/{contactSection}/toggle-status', [ContactSectionController::class, 'toggleStatus'])
             ->name('contact-sections.toggle-status');
         Route::resource('contact-sections', ContactSectionController::class)->except(['show']);

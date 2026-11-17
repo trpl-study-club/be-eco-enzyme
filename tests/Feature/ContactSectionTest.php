@@ -2,8 +2,10 @@
 
 namespace Tests\Feature;
 
+use App\Models\ContactItem;
 use App\Models\ContactSection;
 use App\Models\User;
+use Database\Seeders\RolePermissionSeeder;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
@@ -18,13 +20,17 @@ class ContactSectionTest extends TestCase
     {
         parent::setUp();
 
-        $this->user = User::firstOrCreate(
+        $this->seed(RolePermissionSeeder::class);
+
+        $this->user = User::updateOrCreate(
             ['email' => 'admin@admin.com'],
             [
                 'name' => 'Admin',
                 'password' => Hash::make('password'),
+                'is_active' => true,
             ]
         );
+        $this->user->assignRole('super_admin');
     }
 
     public function test_admin_can_access_contact_sections_index_page(): void
@@ -32,8 +38,59 @@ class ContactSectionTest extends TestCase
         $response = $this->actingAs($this->user)->get(route('admin.contact-sections.index'));
 
         $response->assertStatus(200);
-        $response->assertSee('Section Kontak');
-        $response->assertSee('Buat Kontak Baru');
+        $response->assertSee('Informasi Kontak Desa');
+        $response->assertSee('Tambah Saluran Kontak');
+    }
+
+    public function test_admin_can_manage_contact_hub_header_and_items_directly(): void
+    {
+        $this->actingAs($this->user)
+            ->post(route('admin.contact-sections.update-header'), [
+                'title' => 'Hubungi Tim Pengelola Desa',
+                'description' => 'Kami siap melayani pertanyaan warga setiap hari.',
+            ])
+            ->assertRedirect(route('admin.contact-sections.index'));
+
+        $this->assertDatabaseHas('contact_sections', [
+            'title' => 'Hubungi Tim Pengelola Desa',
+            'description' => 'Kami siap melayani pertanyaan warga setiap hari.',
+        ]);
+
+        // Store individual contact item
+        $this->actingAs($this->user)
+            ->post(route('admin.contact-sections.items.store'), [
+                'label' => 'WHATSAPP',
+                'type' => 'whatsapp',
+                'value' => '+62 812 3456 7890',
+                'icon_name' => 'phone',
+            ])
+            ->assertRedirect(route('admin.contact-sections.index'));
+
+        $item = ContactItem::where('value', '+62 812 3456 7890')->first();
+        $this->assertNotNull($item);
+
+        // Update individual contact item
+        $this->actingAs($this->user)
+            ->put(route('admin.contact-sections.items.update', $item), [
+                'label' => 'WHATSAPP DESA',
+                'type' => 'whatsapp',
+                'value' => '+62 811 2233 4455',
+                'icon_name' => 'phone',
+            ])
+            ->assertRedirect(route('admin.contact-sections.index'));
+
+        $this->assertDatabaseHas('contact_items', [
+            'id' => $item->id,
+            'label' => 'WHATSAPP DESA',
+            'value' => '+62 811 2233 4455',
+        ]);
+
+        // Delete individual contact item
+        $this->actingAs($this->user)
+            ->delete(route('admin.contact-sections.items.destroy', $item))
+            ->assertRedirect(route('admin.contact-sections.index'));
+
+        $this->assertDatabaseMissing('contact_items', ['id' => $item->id]);
     }
 
     public function test_admin_can_access_contact_sections_create_page(): void
@@ -250,5 +307,154 @@ class ContactSectionTest extends TestCase
                 ],
             ],
         ]);
+    }
+
+    public function test_contact_hub_renders_clean_cards_and_action_links_without_type_input(): void
+    {
+        ContactSection::where('is_active', true)->update(['is_active' => false]);
+
+        $section = ContactSection::create([
+            'title' => 'Hubungi Pengelola Desa',
+            'description' => 'Silakan hubungi kami melalui saluran resmi.',
+            'is_active' => true,
+        ]);
+
+        $section->items()->createMany([
+            [
+                'type' => 'whatsapp',
+                'label' => 'WhatsApp Layanan',
+                'value' => '0812-3456-7890',
+                'icon_name' => 'phone',
+                'order' => 1,
+            ],
+            [
+                'type' => 'location',
+                'label' => 'Alamat Jawa Tengah',
+                'value' => 'Desa Jeruklegi, Jawa Tengah',
+                'icon_name' => 'map-pin',
+                'order' => 2,
+            ],
+            [
+                'type' => 'hours',
+                'label' => 'Jadwal Operasional',
+                'value' => 'Senin - Sabtu, 08.00 - 16.00 WIB',
+                'icon_name' => 'clock',
+                'order' => 3,
+            ],
+        ]);
+
+        $response = $this->actingAs($this->user)->get(route('admin.contact-sections.index'));
+
+        $response->assertOk();
+        $response->assertSee('WhatsApp Layanan');
+        $response->assertSee('https://wa.me/6281234567890');
+        $response->assertSee('Buka Chat');
+        $response->assertSee('Alamat Jawa Tengah');
+        $response->assertSee('Lihat di Peta');
+        $response->assertSee('Jadwal Operasional');
+        $response->assertSee('Nama Kontak');
+        $response->assertSee('Isi Kontak');
+        $response->assertSee('Ikon atau Gambar');
+        $response->assertDontSee('Kategori Saluran');
+    }
+
+    public function test_admin_can_store_and_update_contact_item_without_type_field(): void
+    {
+        $this->actingAs($this->user)
+            ->post(route('admin.contact-sections.items.store'), [
+                'label' => 'Alamat Kantor Desa',
+                'value' => 'Jl. Raya Jeruklegi No. 10, Cilacap',
+                'icon_name' => 'map-pin',
+            ])
+            ->assertRedirect(route('admin.contact-sections.index'));
+
+        $item = ContactItem::where('label', 'Alamat Kantor Desa')->first();
+        $this->assertNotNull($item);
+        $this->assertSame('location', $item->type);
+
+        $this->actingAs($this->user)
+            ->put(route('admin.contact-sections.items.update', $item), [
+                'label' => 'Email Pengelola',
+                'value' => 'kontak@jeruklegi.id',
+                'icon_name' => 'mail',
+            ])
+            ->assertRedirect(route('admin.contact-sections.index'));
+
+        $this->assertDatabaseHas('contact_items', [
+            'id' => $item->id,
+            'label' => 'Email Pengelola',
+            'type' => 'email',
+            'value' => 'kontak@jeruklegi.id',
+            'icon_name' => 'mail',
+        ]);
+    }
+
+    public function test_contact_edit_page_only_shows_clean_item_inputs(): void
+    {
+        $contactSection = ContactSection::create([
+            'title' => 'Section Kontak Clean Edit',
+            'description' => 'Deskripsi singkat',
+            'is_active' => true,
+        ]);
+
+        $contactSection->items()->create([
+            'type' => 'whatsapp',
+            'label' => 'WhatsApp Desa',
+            'value' => '+62 812 3456 7890',
+            'icon_name' => 'phone',
+            'order' => 1,
+        ]);
+
+        $response = $this->actingAs($this->user)->get(route('admin.contact-sections.edit', $contactSection));
+
+        $response->assertOk();
+        $response->assertSee('Nama Kontak');
+        $response->assertSee('Isi Kontak');
+        $response->assertSee('Ikon atau Gambar');
+        $response->assertDontSee('Kategori Saluran');
+    }
+
+    public function test_contact_hub_renders_search_empty_state_when_query_has_no_matches(): void
+    {
+        ContactSection::where('is_active', true)->update(['is_active' => false]);
+
+        $section = ContactSection::create([
+            'title' => 'Hubungi Pengelola Desa',
+            'description' => 'Silakan hubungi kami.',
+            'is_active' => true,
+        ]);
+
+        $section->items()->create([
+            'type' => 'whatsapp',
+            'label' => 'WHATSAPP',
+            'value' => '+62 812 3456 7890',
+            'icon_name' => 'phone',
+            'order' => 1,
+        ]);
+
+        $response = $this->actingAs($this->user)
+            ->get(route('admin.contact-sections.index', ['search' => 'saluran-tidak-ada']));
+
+        $response->assertOk();
+        $response->assertSee('Saluran Kontak Tidak Ditemukan');
+        $response->assertSee('Tampilkan Semua Saluran');
+        $response->assertDontSee('Belum Ada Saluran Kontak');
+    }
+
+    public function test_contact_hub_renders_empty_state_when_no_items_exist(): void
+    {
+        ContactSection::where('is_active', true)->update(['is_active' => false]);
+
+        ContactSection::create([
+            'title' => 'Hubungi Pengelola Desa',
+            'description' => 'Silakan hubungi kami.',
+            'is_active' => true,
+        ]);
+
+        $response = $this->actingAs($this->user)->get(route('admin.contact-sections.index'));
+
+        $response->assertOk();
+        $response->assertSee('Belum Ada Saluran Kontak');
+        $response->assertSee('0 Saluran');
     }
 }
