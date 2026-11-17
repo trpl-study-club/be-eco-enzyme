@@ -284,29 +284,45 @@ class ContactSectionTest extends TestCase
             'data' => [
                 'id' => $contactSection->id,
                 'title' => 'Ada Pertanyaan? Kami Siap Membantu.',
-                'location' => 'Desa Jeruklegi, Jawa Tengah',
-                'email' => 'halo@ecoenzyme-jeruklegi.id',
-                'whatsapp' => '+62 888 0245 7102',
+                'description' => 'Ingin tahu lebih banyak tentang produk, cara pembuatan, atau peluang kolaborasi?',
                 'is_active' => true,
                 'items' => [
                     [
+                        'type' => 'location',
                         'label' => 'LOKASI',
                         'value' => 'Desa Jeruklegi, Jawa Tengah',
                         'icon_name' => 'map-pin',
+                        'icon_image_url' => null,
+                        'order' => 1,
                     ],
                     [
+                        'type' => 'email',
                         'label' => 'EMAIL',
                         'value' => 'halo@ecoenzyme-jeruklegi.id',
                         'icon_name' => 'mail',
+                        'icon_image_url' => null,
+                        'order' => 2,
                     ],
                     [
+                        'type' => 'whatsapp',
                         'label' => 'WHATSAPP',
                         'value' => '+62 888 0245 7102',
                         'icon_name' => 'phone',
+                        'icon_image_url' => null,
+                        'order' => 3,
                     ],
                 ],
             ],
         ]);
+
+        $response->assertJsonMissingPath('data.contacts')
+            ->assertJsonMissingPath('data.location')
+            ->assertJsonMissingPath('data.email')
+            ->assertJsonMissingPath('data.whatsapp')
+            ->assertJsonMissingPath('data.created_at')
+            ->assertJsonMissingPath('data.updated_at')
+            ->assertJsonMissingPath('data.items.0.icon_image')
+            ->assertJsonMissingPath('data.items.0.is_active');
     }
 
     public function test_contact_hub_renders_clean_cards_without_copy_or_external_action_buttons(): void
@@ -515,8 +531,7 @@ class ContactSectionTest extends TestCase
         $this->getJson('/api/v1/contact')
             ->assertOk()
             ->assertJsonCount(1, 'data.items')
-            ->assertJsonPath('data.whatsapp', '+62 899 7777 6666')
-            ->assertJsonPath('data.email', null);
+            ->assertJsonPath('data.items.0.value', '+62 899 7777 6666');
 
         $this->actingAs($this->user)
             ->from(route('admin.contact-sections.index'))
@@ -531,6 +546,6 @@ class ContactSectionTest extends TestCase
         $this->getJson('/api/v1/contact')
             ->assertOk()
             ->assertJsonCount(2, 'data.items')
-            ->assertJsonPath('data.email', 'nonaktif@jeruklegi.id');
+            ->assertJsonPath('data.items.1.value', 'nonaktif@jeruklegi.id');
     }
 }

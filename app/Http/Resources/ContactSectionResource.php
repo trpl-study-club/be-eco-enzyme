@@ -19,13 +19,7 @@ class ContactSectionResource extends JsonResource
             'title' => $this->title,
             'description' => $this->description,
             'is_active' => (bool) $this->is_active,
-            'location' => $this->location,
-            'email' => $this->email,
-            'whatsapp' => $this->whatsapp,
             'items' => ContactItemResource::collection($this->whenLoaded('items')),
-            'contacts' => ContactItemResource::collection($this->whenLoaded('items')),
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
         ];
     }
 }
