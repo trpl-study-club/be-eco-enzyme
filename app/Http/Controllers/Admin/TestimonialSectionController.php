@@ -159,7 +159,7 @@ class TestimonialSectionController extends Controller
         DB::transaction(function () use ($validated, $section, $request) {
             $isActive = ($request->has('has_is_active_toggle') || $request->has('is_active'))
                 ? $request->boolean('is_active')
-                : true;
+                : (bool) $section->is_active;
 
             $section->update([
                 'title' => trim($validated['title']),
@@ -338,8 +338,8 @@ class TestimonialSectionController extends Controller
         }
 
         $message = $newStatus
-            ? 'Bagian Testimoni berhasil diaktifkan dan ditampilkan di website.'
-            : 'Bagian Testimoni berhasil dinonaktifkan (disimpan sebagai draf).';
+            ? 'Judul & angka statistik testimoni berhasil ditampilkan di website.'
+            : 'Judul & angka statistik testimoni disembunyikan (ulasan pelanggan tetap tampil di website).';
 
         return back()->with('success', $message);
     }
