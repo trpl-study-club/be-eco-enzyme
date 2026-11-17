@@ -259,22 +259,11 @@ use OpenApi\Attributes as OA;
         new OA\Property(property: 'title', type: 'string', example: 'Hubungi Kami'),
         new OA\Property(property: 'description', type: 'string', nullable: true, example: 'Jangan ragu untuk menghubungi kami'),
         new OA\Property(property: 'is_active', type: 'boolean', example: true),
-        new OA\Property(property: 'location', type: 'string', nullable: true, example: 'Jl. Contoh No. 123, Surabaya'),
-        new OA\Property(property: 'email', type: 'string', nullable: true, example: 'info@pengabdiandosen.id'),
-        new OA\Property(property: 'whatsapp', type: 'string', nullable: true, example: '6281234567890'),
         new OA\Property(
             property: 'items',
             type: 'array',
             items: new OA\Items(ref: '#/components/schemas/ContactItem')
         ),
-        new OA\Property(
-            property: 'contacts',
-            type: 'array',
-            description: 'Alias dari items (data yang sama)',
-            items: new OA\Items(ref: '#/components/schemas/ContactItem')
-        ),
-        new OA\Property(property: 'created_at', type: 'string', format: 'date-time'),
-        new OA\Property(property: 'updated_at', type: 'string', format: 'date-time'),
     ]
 )]
 
@@ -288,7 +277,6 @@ use OpenApi\Attributes as OA;
         new OA\Property(property: 'label', type: 'string', example: 'WhatsApp Kami'),
         new OA\Property(property: 'value', type: 'string', example: '6281234567890'),
         new OA\Property(property: 'icon_name', type: 'string', nullable: true, example: 'phone'),
-        new OA\Property(property: 'icon_image', type: 'string', nullable: true),
         new OA\Property(property: 'icon_image_url', type: 'string', format: 'url', nullable: true),
         new OA\Property(property: 'order', type: 'integer', example: 1),
     ]

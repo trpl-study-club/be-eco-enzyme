@@ -79,7 +79,7 @@
                     "Testimonial"
                 ],
                 "summary": "Data Testimoni",
-                "description": "Menampilkan section testimoni yang aktif beserta daftar statistik dan testimoni pelanggan. Hanya mengembalikan 1 section aktif.",
+                "description": "Menampilkan section testimoni beserta daftar statistik dan testimoni pelanggan. Jika status section nonaktif, judul dan statistik disembunyikan sedangkan daftar testimoni pelanggan tetap ditampilkan.",
                 "operationId": "c1e780205e01566f0dc6bd13e2a2b934",
                 "responses": {
                     "200": {
@@ -317,41 +317,11 @@
                         "type": "boolean",
                         "example": true
                     },
-                    "location": {
-                        "type": "string",
-                        "example": "Jl. Contoh No. 123, Surabaya",
-                        "nullable": true
-                    },
-                    "email": {
-                        "type": "string",
-                        "example": "info@pengabdiandosen.id",
-                        "nullable": true
-                    },
-                    "whatsapp": {
-                        "type": "string",
-                        "example": "6281234567890",
-                        "nullable": true
-                    },
                     "items": {
                         "type": "array",
                         "items": {
                             "$ref": "#/components/schemas/ContactItem"
                         }
-                    },
-                    "contacts": {
-                        "description": "Alias dari items (data yang sama)",
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/ContactItem"
-                        }
-                    },
-                    "created_at": {
-                        "type": "string",
-                        "format": "date-time"
-                    },
-                    "updated_at": {
-                        "type": "string",
-                        "format": "date-time"
                     }
                 },
                 "type": "object"
@@ -379,10 +349,6 @@
                     "icon_name": {
                         "type": "string",
                         "example": "phone",
-                        "nullable": true
-                    },
-                    "icon_image": {
-                        "type": "string",
                         "nullable": true
                     },
                     "icon_image_url": {
