@@ -7,6 +7,7 @@ use App\Models\ContactSection;
 use App\Models\User;
 use Database\Seeders\RolePermissionSeeder;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
@@ -66,7 +67,7 @@ class ContactSectionTest extends TestCase
             ])
             ->assertRedirect(route('admin.contact-sections.index'));
 
-        $item = ContactItem::where('value', '+62 812 3456 7890')->first();
+        $item = ContactItem::where('value', '6281234567890')->first();
         $this->assertNotNull($item);
 
         // Update individual contact item
@@ -82,7 +83,7 @@ class ContactSectionTest extends TestCase
         $this->assertDatabaseHas('contact_items', [
             'id' => $item->id,
             'label' => 'WHATSAPP DESA',
-            'value' => '+62 811 2233 4455',
+            'value' => '6281122334455',
         ]);
 
         // Delete individual contact item
@@ -306,7 +307,7 @@ class ContactSectionTest extends TestCase
                     [
                         'type' => 'whatsapp',
                         'label' => 'WHATSAPP',
-                        'value' => '+62 888 0245 7102',
+                        'value' => '6288802457102',
                         'icon_name' => 'phone',
                         'icon_image_url' => null,
                         'order' => 3,
@@ -518,7 +519,7 @@ class ContactSectionTest extends TestCase
             ->get(route('admin.contact-sections.index', ['status' => 'active']))
             ->assertOk()
             ->assertSee('WhatsApp Aktif')
-            ->assertSee('+62 899 7777 6666')
+            ->assertSee('6289977776666')
             ->assertDontSee('nonaktif@jeruklegi.id');
 
         $this->actingAs($this->user)
@@ -526,12 +527,12 @@ class ContactSectionTest extends TestCase
             ->assertOk()
             ->assertSee('Email Nonaktif')
             ->assertSee('nonaktif@jeruklegi.id')
-            ->assertDontSee('+62 899 7777 6666');
+            ->assertDontSee('6289977776666');
 
         $this->getJson('/api/v1/contact')
             ->assertOk()
             ->assertJsonCount(1, 'data.items')
-            ->assertJsonPath('data.items.0.value', '+62 899 7777 6666');
+            ->assertJsonPath('data.items.0.value', '6289977776666');
 
         $this->actingAs($this->user)
             ->from(route('admin.contact-sections.index'))
@@ -547,5 +548,67 @@ class ContactSectionTest extends TestCase
             ->assertOk()
             ->assertJsonCount(2, 'data.items')
             ->assertJsonPath('data.items.1.value', 'nonaktif@jeruklegi.id');
+    }
+
+    public function test_whatsapp_contact_values_are_normalized_without_extra_payload_fields(): void
+    {
+        ContactSection::where('is_active', true)->update(['is_active' => false]);
+
+        $section = ContactSection::create([
+            'title' => 'Hubungi Kami',
+            'description' => 'Saluran WhatsApp resmi.',
+            'is_active' => true,
+        ]);
+
+        $inputs = [
+            ['label' => 'WA Lokal', 'value' => '0812-3456-7890'],
+            ['label' => 'WA Plus 62', 'value' => '+62 813 9876 5432'],
+            ['label' => 'WA Plus 620 Typo', 'value' => '+62 0815-1122-3344'],
+            ['label' => 'WA Link', 'value' => 'https://wa.me/628170001122?text=Halo%20123'],
+            ['label' => 'WA API Link', 'value' => 'https://api.whatsapp.com/send?phone=081988887777&text=Order%209'],
+        ];
+
+        foreach ($inputs as $input) {
+            $this->actingAs($this->user)
+                ->post(route('admin.contact-sections.items.store'), [
+                    'label' => $input['label'],
+                    'value' => $input['value'],
+                    'icon_name' => 'phone',
+                ])
+                ->assertRedirect(route('admin.contact-sections.index'));
+        }
+
+        $section->items()->create([
+            'type' => 'hours',
+            'label' => 'Jam Operasional',
+            'value' => 'Senin - Sabtu, 08.00 - 16.00 WIB',
+            'icon_name' => 'clock',
+            'order' => 6,
+        ]);
+
+        // Simulate legacy un-normalized row directly in DB to ensure API resource normalizes it too
+        DB::table('contact_items')->insert([
+            'contact_section_id' => $section->id,
+            'type' => 'whatsapp',
+            'label' => 'WA Legacy',
+            'value' => '0821-5555-4444',
+            'icon_name' => 'phone',
+            'order' => 7,
+            'is_active' => true,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        $response = $this->getJson('/api/v1/contact')->assertOk();
+
+        $response->assertJsonPath('data.items.0.value', '6281234567890')
+            ->assertJsonPath('data.items.1.value', '6281398765432')
+            ->assertJsonPath('data.items.2.value', '6281511223344')
+            ->assertJsonPath('data.items.3.value', '628170001122')
+            ->assertJsonPath('data.items.4.value', '6281988887777')
+            ->assertJsonPath('data.items.5.value', 'Senin - Sabtu, 08.00 - 16.00 WIB')
+            ->assertJsonPath('data.items.6.value', '6282155554444')
+            ->assertJsonMissingPath('data.items.0.href')
+            ->assertJsonMissingPath('data.items.0.url');
     }
 }

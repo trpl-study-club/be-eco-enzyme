@@ -362,6 +362,15 @@ GET /api/v1/contact
         "icon_name": "mail",
         "icon_image_url": null,
         "order": 2
+      },
+      {
+        "id": 193,
+        "type": "whatsapp",
+        "label": "WHATSAPP",
+        "value": "6288802457102",
+        "icon_name": "phone",
+        "icon_image_url": null,
+        "order": 3
       }
     ]
   }
@@ -378,7 +387,7 @@ GET /api/v1/contact
 | `items` | Array of Objects | Daftar item kontak yang berstatus `is_active = true`, terurut berdasarkan `order` lalu `id`. |
 | `items[].type` | String | Tipe item kontak (`location`, `email`, `whatsapp`, `custom`). |
 | `items[].label` | String | Label tampilan kartu kontak. |
-| `items[].value` | String | Nilai/isi kontak (alamat, email, nomor WhatsApp, handle/tautan). |
+| `items[].value` | String | Nilai/isi kontak (untuk `whatsapp` otomatis dinormalisasi ke format angka `628...` sehingga frontend cukup memakai `https://wa.me/${item.value}`). |
 | `items[].icon_name` | String / Null | Nama ikon Lucide (contoh: `map-pin`, `mail`, `phone`). |
 | `items[].icon_image_url` | String (URL) / Null | URL publik absolut gambar ikon kustom bila diunggah. |
 | `items[].order` | Integer | Urutan tampilan kartu kontak. |
