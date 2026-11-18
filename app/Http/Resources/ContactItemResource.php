@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\ContactItem;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -18,7 +19,7 @@ class ContactItemResource extends JsonResource
             'id' => $this->id,
             'type' => $this->type,
             'label' => $this->label,
-            'value' => $this->value,
+            'value' => ContactItem::normalizeValue($this->type, $this->value),
             'icon_name' => $this->icon_name,
             'icon_image_url' => $this->icon_image_url,
             'order' => $this->order,

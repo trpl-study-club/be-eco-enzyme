@@ -39,7 +39,7 @@ class ContactSectionSeeder extends Seeder
             [
                 'type' => 'whatsapp',
                 'label' => 'WHATSAPP',
-                'value' => '+62 888 0245 7102',
+                'value' => '6288802457102',
                 'icon_name' => 'phone',
                 'order' => 3,
             ],

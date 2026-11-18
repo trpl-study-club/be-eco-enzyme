@@ -69,6 +69,7 @@ class ContactSectionController extends Controller
             || str_contains($lowerLabel, 'phone')
             || preg_match('/\b(wa|hp|telp)\b/', $lowerLabel)
             || str_contains($lowerValue, 'wa.me/')
+            || str_contains($lowerValue, 'whatsapp.com')
             || preg_match('/^\+?[0-9][0-9\s\-()]{6,19}$/', $trimmedValue)
         ) {
             return 'whatsapp';
